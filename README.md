@@ -1,4 +1,4 @@
-# ImageX - Drupal Patches
+# Drupal Patches
 
 The following is a collection of patches that are used on a regular basis during active development. This repository exists as a central holding area for all patch files that are applied to Drupal Core, contributed modules and themes. The reasoning for this is the result of [ImageX's Installation Kit](http://github.com/imagex/imagex_installkit) and the Drush make process of using a URL for loading patch files.
 
@@ -13,6 +13,28 @@ This patch enables the ability to have inheritable (multiple) profiles allowing 
 ## Patches for Contributed Modules
 
 *There are currently no patches that are being used within active development for contributed modules.*
+
+## How to use these patches
+
+Patches should not be applied directly to the codebase that is committed to repositories as a result of increased effort to update the codebase when a new version of core, contributed modules and or themes are released. Instead, it is recommended that you make use of the `drush make` process and a `drupal-org.make` file for applying patches to projects.
+
+Each of the patch links above directly link to the RAW version of the patch file that is to be applied. The `drush make` files that specify patches for projects using the `projects[project-name][patch][]` syntax need to have a URL specified for the patch file. Therefore, copy the RAW URL of the patch file that lives within this repository and specify it within `drush make` project build file. This will allow for increased management of the code that is to be patched in addition to ease of managing revisions to the patches.
+
+All projects that make use of these patches should also not directly link to the forked repositories RAW version of the patch file but instead directly to this repositories RAW version.
+
+For example, if your project is to have the inheritable profiles patch applied to it, the `drupal-org-core.make` file may look something like this:
+
+```
+api = 2
+core = 7.x
+
+; Download Drupal core.
+projects[drupal][type] = "core"
+projects[drupal][version] = "7.23"
+
+; Apply the inheritable profiles patch to core.
+projects[drupal][patch][] = https://raw.github.com/imagex/imagex_patches/7.x/core/inheritable-profiles/1356276-D7-inheritable-profiles-multi.patch
+```
 
 ## Contributing
 
