@@ -16,7 +16,7 @@ This patch enables the ability to have inheritable (multiple) profiles allowing 
 
 This patch allows for the workbench moderation's transition's permissions to be exported and re-created during the installation. This resolves the `module cannot be null` error that is presented within the the `user_role_grant_permissions` function of the `user.module`.
 
-***Patch File: [1314508-workbench-moderation-features.patch](https://raw.github.com/imagex/imagex_patches/7.x/core/inheritable-profiles/1314508-workbench-moderation-features.patch)***
+***Patch File: [1314508-workbench-moderation-features.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/workbench_moderation/1314508-workbench-moderation-features.patch)***
 
 ## How to use these patches
 
