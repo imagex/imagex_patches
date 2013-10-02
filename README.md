@@ -12,6 +12,12 @@ This patch enables the ability to have inheritable (multiple) profiles allowing 
 
 ## Patches for Contributed Modules
 
+#### Features - Issue: 927566, Comment: 72
+
+This patch enhances features method of identifying menu links, ensuring that each menu link is unique. This patch allows menu links with the same URL to be exported and re-created during the installation.
+
+***Patch File: [features-multiple-link-path-927566-72.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/features/features-multiple-link-path-927566-72.patch)***
+
 #### Workbench Moderation - Issue: 1314508, Comment: 70
 
 This patch allows for the workbench moderation's transition's permissions to be exported and re-created during the installation. This resolves the `module cannot be null` error that is presented within the the `user_role_grant_permissions` function of the `user.module`.
