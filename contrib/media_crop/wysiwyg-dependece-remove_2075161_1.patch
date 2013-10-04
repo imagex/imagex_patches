@@ -1,0 +1,10 @@
+diff --git a/media_crop.info b/media_crop.info
+index b173626..8d5d41a 100644
+--- a/media_crop.info
++++ b/media_crop.info
+@@ -2,5 +2,4 @@ name = Media Crop
+ description = Adds image cropping to media embed
+ core = 7.x
+ dependencies[] = media
+-dependencies[] = wysiwyg
+ dependencies[] = libraries

@@ -1,0 +1,22 @@
+diff --git a/js/media_crop.image_replace.js b/js/media_crop.image_replace.js
+index 0347e91..dceaeb3 100644
+--- a/js/media_crop.image_replace.js
++++ b/js/media_crop.image_replace.js
+@@ -14,10 +14,14 @@
+         var img = $('#' + id);
+         if (img.length == 0) {
+           $('iframe').each(function () {
+-            var iimg = $(this).contents().find('#' + id);
+-            if (iimg.length > 0) {
+-              img = iimg;
++            // There can be iframes from other domains on the page.
++            try {
++              var iimg = $(this).contents().find('#' + id);
++              if (iimg.length > 0) {
++                img = iimg;
++              }
+             }
++            catch (e) {}
+           });
+         }
+         var src = (img.attr('src') || '');
