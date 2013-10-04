@@ -1,0 +1,120 @@
+diff --git a/js/media_crop.image_replace.js b/js/media_crop.image_replace.js
+index 0347e91..5385fed 100644
+--- a/js/media_crop.image_replace.js
++++ b/js/media_crop.image_replace.js
+@@ -12,7 +12,7 @@
+       success: function (data) {
+         var mciid = '%7BMCIID%7D';
+         var img = $('#' + id);
+-        if (img.length == 0) {
++        if (img.length === 0) {
+           $('iframe').each(function () {
+             var iimg = $(this).contents().find('#' + id);
+             if (iimg.length > 0) {
+@@ -26,6 +26,7 @@
+         img.attr('src', src.replace(mciid, data));
+         img.attr('data-cke-saved-src', dataCkeSavedSrc.replace(mciid, data));
+         img.attr('class', cls.replace(mciid, data));
++        img.addClass('mciid-' + data);
+       },
+       error: function (jqXHR, textStatus, errorThrown) {
+         if (parent.console && parent.console.log) {
+diff --git a/media_crop.module b/media_crop.module
+index 39d25fc..32fa04b 100644
+--- a/media_crop.module
++++ b/media_crop.module
+@@ -587,8 +587,20 @@ function media_crop_create_instance($style_name, $file, $token) {
+   return NULL;
+ }
+ 
++
+ /**
+  * Page callback for image generation.
++ * @param  media_crop_instance == object
++ *         $o->mciid
++ *         $o->fid
++ *         $o->image_style_name
++ *         $o->angle
++ *         $o->crop_x
++ *         $o->crop_y
++ *         $o->crop_w
++ *         $o->crop_h
++ *         $o->crop_scale_w
++ *         $o->crop_scale_h
+  */
+ function media_crop_get_image($media_crop_instance) {
+   if (!$media_crop_instance) {
+@@ -1017,14 +1029,35 @@ function _media_crop_extract_rotation_and_crop(array $effects, $image_width, $im
+  */
+ function media_crop_media_token_to_markup_alter(&$element, $tag_info, $settings) {
+   if ($tag_info['view_mode'] === 'media_crop' && $tag_info['file']->type === 'image') {
+-    $element['#attributes']['class'] = array('media-image');
+-    $media_crop_settings = $tag_info['attributes'];
+-    foreach ($media_crop_settings as $name => $value) {
+-      if (_startsWith($name, 'media_crop_')) {
+-        $element['#attributes']['class'][] = 'attr__' . $name . '__' . $value;
+-        $element['#media_crop'][$name] = $value;
++
++    $mciid = NULL;
++    foreach ($tag_info['attributes']['class'] as $k => $class_name) {
++      if (substr($class_name, 0, 6) == "mciid-") {
++        $mciid = str_replace("mciid-", "", $class_name);
+       }
+     }
++
++    if (is_null($mciid)) {
++      return $element;
++    }
++
++    // Something changes here.
++    // @todo find out why.
++    if (!isset($element['#file']) && isset($element['content']['file']['#file'])) {
++      $element['#file'] = $element['content']['file']['#file'];
++    }
++
++    if (!isset($element['#attributes']) && is_array($tag_info['attributes'])) {
++      $element['#attributes'] = $tag_info['attributes'];
++      $element['#height'] = $tag_info['height'];
++      $element['#width'] = $tag_info['width'];
++      $element['#alt'] = $tag_info['alt'];
++      $element['#title'] = $tag_info['title'];
++    }
++
++
++    $element['#media_crop'] = array();
++    $element['#media_crop']['media_crop_instance'] = $mciid;
+     $element['#theme'] = 'media_crop_image';
+   }
+ }
+@@ -1048,7 +1081,14 @@ function theme_media_crop_image($variables) {
+ 
+   $image_variables = array(
+     'path' => _media_crop_get_path($mciid, $file->uri),
+-    'attributes' => $variables['attributes'],
++    'alt' => t($variables['attributes']['alt']),
++    'title' => t($variables['attributes']['title']),
++    'width' => $variables['attributes']['width'],
++    'height' => $variables['attributes']['height'],
++    'attributes' => array(
++      'class' => implode(" ", $variables['attributes']['class']),
++      'id' => $variables['attributes']['id'],
++    ),
+   );
+ 
+   return theme('image', $image_variables);
+@@ -1062,6 +1102,15 @@ function media_crop_element_info_alter(&$types) {
+ }
+ 
+ /**
++ * Implements hook_entity_info_alter().
++ *
++ * Add media_crop view modes to the file entity type.
++ */
++function media_crop_entity_info_alter(&$entity_info) {
++  $entity_info['file']['view modes']['media_crop'] = array('label' => t('Media Crop'), 'custom settings' => FALSE);
++}
++
++/**
+  * Process function for adding necessary js to the editor.
+  */
+ function media_crop_pre_render_text_format($element) {

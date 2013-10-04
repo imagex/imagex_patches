@@ -24,6 +24,36 @@ This patch allows for the workbench moderation's transition's permissions to be 
 
 ***Patch File: [1314508-workbench-moderation-features.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/workbench_moderation/1314508-workbench-moderation-features.patch)***
 
+#### Ckeditor - Issue: 1504696, Comment: 58
+
+This is a follow up patch to the one Kevin created to add media 2.x support to ckeditor.
+
+***Patch File: [ckeditor_1504696_58.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/ckeditor/ckeditor_1504696_58.patch)***
+
+#### Ckeditor - Issue: 2043365, Comment: 6
+
+This patch fixes a problem where text formats assigned by ckeditor profiles in Features wouldn't be respected when they should be empty.
+
+***Patch File: [ckeditor-ckeditor_features_format-2043365-6.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/ckeditor/ckeditor-ckeditor_features_format-2043365-6.patch)***
+
+#### Media Crop - Issue: 2075161, Comment: 2
+
+Small patch removing dependence on the wysiwyg module, since we're using ckeditor instead.
+
+***Patch File: [wysiwyg-dependece-remove_2075161_1.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media_crop/wysiwyg-dependece-remove_2075161_1.patch)***
+
+#### Media Crop - Issue: 2043365, Comment: 6
+
+This patch fixes a bug where embedded image crop images aren't rendered in Firefox. This is due to a bug where it can't handle multiple iframes in the DOM. This patch adds a try/catch for the right wysiwyg iframe.
+
+***Patch File: [media_crop-access-iframes-safely-1710824-7.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media_crop/media_crop-access-iframes-safely-1710824-7.patch)***
+
+#### Media Crop - Issue: 1896860, Comment: 1
+
+This patch makes Media Crop functionality work with Media 2.x. Patch by Shea.
+
+***Patch File: [media_crop-7-x.1.x_media-2.x.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media_crop/media_crop-7-x.1.x_media-2.x.patch)***
+
 ## How to use these patches
 
 Patches should not be applied directly to the codebase that is committed to repositories as a result of increased effort to update the codebase when a new version of core, contributed modules and or themes are released. Instead, it is recommended that you make use of the `drush make` process and a `drupal-org.make` file for applying patches to projects.
