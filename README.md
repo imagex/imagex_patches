@@ -54,7 +54,7 @@ This patch makes Media Crop functionality work with Media 2.x. Patch by Shea.
 
 ***Patch File: [media_crop-7-x.1.x_media-2.x.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media_crop/media_crop-7-x.1.x_media-2.x.patch)***
 
-#### Libraries API
+#### Libraries API - Inheritable Profiles
 
 This patch enables the Libraries API module to take into consideration multiple profiles when performing a libraries directory search. This is a *required* patch if using the Inheritable Profiles patch listed above when using the Libraries API.
 
