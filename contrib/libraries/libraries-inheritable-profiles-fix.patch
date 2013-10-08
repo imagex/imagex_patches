@@ -1,0 +1,31 @@
+diff --git a/libraries.module b/libraries.module
+index d843bcd..8f6164e 100644
+--- a/libraries.module
++++ b/libraries.module
+@@ -74,7 +74,6 @@ function libraries_get_path($name, $base_path = FALSE) {
+  */
+ function libraries_get_libraries() {
+   $searchdir = array();
+-  $profile = drupal_get_path('profile', drupal_get_profile());
+   $config = conf_path();
+ 
+   // Similar to 'modules' and 'themes' directories in the root directory,
+@@ -85,7 +84,17 @@ function libraries_get_libraries() {
+   // Similar to 'modules' and 'themes' directories inside an installation
+   // profile, installation profiles may want to place libraries into a
+   // 'libraries' directory.
+-  $searchdir[] = "$profile/libraries";
++  $profiles = drupal_get_profiles();
++
++  // Reverse the installed installation profiles allowing for a
++  // child profile to override a parent's libraries.
++  $profiles = array_reverse($profiles);
++
++  // Create and append each profile as its own path in the search array.
++  foreach ($profiles as $profile) {
++    $profile_path = drupal_get_path('profile', $profile);
++    $searchdir[] = "$profile_path/libraries";
++  }
+ 
+   // Always search sites/all/libraries.
+   $searchdir[] = 'sites/all/libraries';
