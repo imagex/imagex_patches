@@ -42,6 +42,12 @@ This patch enables the Libraries API module to take into consideration multiple 
 
 ***Patch File: [libraries-inheritable-profiles-fix.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/libraries/libraries-inheritable-profiles-fix.patch)***
 
+#### Media - Issue: 2071073, Comment: 1
+
+This patch resolves the PHP Warning errors that are presented when the `media_file_default_displays_alter()` function is invoked.
+
+***Patch File: [media-warnings-creating-default-object-from-emtpy-value-2071073-1.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media/media-warnings-creating-default-object-from-emtpy-value-2071073-1.patch)***
+
 #### Media Crop - Issue: 2075161, Comment: 2
 
 Small patch removing dependence on the wysiwyg module, since we're using ckeditor instead.
