@@ -1,0 +1,14 @@
+diff --git a/features_override.export.inc b/features_override.export.inc
+index 38ab684..4eba72b 100644
+--- a/features_override.export.inc
++++ b/features_override.export.inc
+@@ -485,6 +485,9 @@ function features_override_var_export($var, $prefix = '') {
+     else {
+       if (method_exists($var, 'export')) {
+         $output = $var->export();
++        if (is_array($output) || is_object($output)) {
++          $output = features_override_var_export((array) $output, $prefix);
++        }
+       }
+       elseif (get_class($var) === 'stdClass') {
+         $output = '(object) ' . features_override_var_export((array) $var, $prefix);

@@ -60,6 +60,12 @@ This patch enables the Libraries API module to take into consideration multiple 
 
 ***Patch File: [libraries-inheritable-profiles-fix.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/libraries/libraries-inheritable-profiles-fix.patch)***
 
+#### Features Override - Issue: 1970474, Comment: 5
+
+This patch solves a PHP notice error that identifies an array to string conversion that occurs when viewing the features/features_override page. The error also affects the visual representation of the exports.
+
+***Patch File: [features_override-php_array_to_string_notice-1970474.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/features_override/features_override-php_array_to_string_notice-1970474.patch)***
+
 ## How to use these patches
 
 Patches should not be applied directly to the codebase that is committed to repositories as a result of increased effort to update the codebase when a new version of core, contributed modules and or themes are released. Instead, it is recommended that you make use of the `drush make` process and a `drupal-org.make` file for applying patches to projects.
