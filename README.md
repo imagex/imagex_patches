@@ -18,12 +18,6 @@ This patch enhances features method of identifying menu links, ensuring that eac
 
 ***Patch File: [features-multiple-link-path-927566-72.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/features/features-multiple-link-path-927566-72.patch)***
 
-#### Workbench Moderation - Issue: 1314508, Comment: 70
-
-This patch allows for the workbench moderation's transition's permissions to be exported and re-created during the installation. This resolves the `module cannot be null` error that is presented within the the `user_role_grant_permissions` function of the `user.module`.
-
-***Patch File: [1314508-workbench-moderation-features.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/workbench_moderation/1314508-workbench-moderation-features.patch)***
-
 #### Ckeditor - Issue: 1504696, Comment: 58
 
 This is a follow up patch to the one Kevin created to add media 2.x support to ckeditor.
@@ -35,6 +29,18 @@ This is a follow up patch to the one Kevin created to add media 2.x support to c
 This patch fixes a problem where text formats assigned by ckeditor profiles in Features wouldn't be respected when they should be empty.
 
 ***Patch File: [ckeditor-ckeditor_features_format-2043365-6.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/ckeditor/ckeditor-ckeditor_features_format-2043365-6.patch)***
+
+#### Features Override - Issue: 1970474, Comment: 5
+
+This patch solves a PHP notice error that identifies an array to string conversion that occurs when viewing the features/features_override page. The error also affects the visual representation of the exports.
+
+***Patch File: [features_override-php_array_to_string_notice-1970474.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/features_override/features_override-php_array_to_string_notice-1970474.patch)***
+
+#### Libraries API - Inheritable Profiles
+
+This patch enables the Libraries API module to take into consideration multiple profiles when performing a libraries directory search. This is a *required* patch if using the Inheritable Profiles patch listed above when using the Libraries API.
+
+***Patch File: [libraries-inheritable-profiles-fix.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/libraries/libraries-inheritable-profiles-fix.patch)***
 
 #### Media Crop - Issue: 2075161, Comment: 2
 
@@ -54,17 +60,11 @@ This patch makes Media Crop functionality work with Media 2.x. Patch by Shea.
 
 ***Patch File: [media_crop-7-x.1.x_media-2.x.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media_crop/media_crop-7-x.1.x_media-2.x.patch)***
 
-#### Libraries API - Inheritable Profiles
+#### Workbench Moderation - Issue: 1314508, Comment: 70
 
-This patch enables the Libraries API module to take into consideration multiple profiles when performing a libraries directory search. This is a *required* patch if using the Inheritable Profiles patch listed above when using the Libraries API.
+This patch allows for the workbench moderation's transition's permissions to be exported and re-created during the installation. This resolves the `module cannot be null` error that is presented within the the `user_role_grant_permissions` function of the `user.module`.
 
-***Patch File: [libraries-inheritable-profiles-fix.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/libraries/libraries-inheritable-profiles-fix.patch)***
-
-#### Features Override - Issue: 1970474, Comment: 5
-
-This patch solves a PHP notice error that identifies an array to string conversion that occurs when viewing the features/features_override page. The error also affects the visual representation of the exports.
-
-***Patch File: [features_override-php_array_to_string_notice-1970474.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/features_override/features_override-php_array_to_string_notice-1970474.patch)***
+***Patch File: [1314508-workbench-moderation-features.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/workbench_moderation/1314508-workbench-moderation-features.patch)***
 
 ## How to use these patches
 
