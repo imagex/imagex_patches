@@ -12,12 +12,6 @@ This patch enables the ability to have inheritable (multiple) profiles allowing 
 
 ## Patches for Contributed Modules
 
-#### Features - Issue: 927566, Comment: 72
-
-This patch enhances features method of identifying menu links, ensuring that each menu link is unique. This patch allows menu links with the same URL to be exported and re-created during the installation.
-
-***Patch File: [features-multiple-link-path-927566-72.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/features/features-multiple-link-path-927566-72.patch)***
-
 #### Ckeditor - Issue: 1504696, Comment: 58
 
 This is a follow up patch to the one Kevin created to add media 2.x support to ckeditor.
@@ -29,6 +23,12 @@ This is a follow up patch to the one Kevin created to add media 2.x support to c
 This patch fixes a problem where text formats assigned by ckeditor profiles in Features wouldn't be respected when they should be empty.
 
 ***Patch File: [ckeditor-ckeditor_features_format-2043365-6.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/ckeditor/ckeditor-ckeditor_features_format-2043365-6.patch)***
+
+#### Features - Issue: 927566, Comment: 72
+
+This patch enhances features method of identifying menu links, ensuring that each menu link is unique. This patch allows menu links with the same URL to be exported and re-created during the installation.
+
+***Patch File: [features-multiple-link-path-927566-72.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/features/features-multiple-link-path-927566-72.patch)***
 
 #### Features Override - Issue: 1970474, Comment: 5
 
