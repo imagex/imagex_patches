@@ -44,7 +44,7 @@ This patch enables the Libraries API module to take into consideration multiple 
 
 #### Media - Issue: 2071073, Comment: 1
 
-This patch resolves the PHP Warning errors that are presented when the `media_file_default_displays_alter()` function is invoked.
+This patch resolves the PHP Warning errors that are presented when the `media_file_default_displays_alter()` function is invoked when comparing an export to the database.
 
 ***Patch File: [media-warnings-creating-default-object-from-emtpy-value-2071073-1.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media/media-warnings-creating-default-object-from-emtpy-value-2071073-1.patch)***
 
