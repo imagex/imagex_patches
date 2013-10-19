@@ -66,6 +66,12 @@ This patch makes Media Crop functionality work with Media 2.x. Patch by Shea.
 
 ***Patch File: [media_crop-7-x.1.x_media-2.x.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media_crop/media_crop-7-x.1.x_media-2.x.patch)***
 
+#### Taxonomy Access Fix - Issue: 1637446
+
+This patch allows for the permissions created by the Taxonomy Access Fix module to identify the vocabularies using the machine name of the vocabulary and not the vocabulary id. This patch also provides an update path for existing permissions stored within the `{role_permission}` table.
+
+***Patch File: [taxonomy_access_fix-changes-vocab-vid-to-machinename-usage-1637446.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/taxonomy_access_fix/taxonomy_access_fix-changes-vocab-vid-to-machinename-usage-1637446.patch)***
+
 #### Workbench Moderation - Issue: 1314508, Comment: 70
 
 This patch allows for the workbench moderation's transition's permissions to be exported and re-created during the installation. This resolves the `module cannot be null` error that is presented within the the `user_role_grant_permissions` function of the `user.module`.
