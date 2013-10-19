@@ -36,7 +36,7 @@ This patch solves a PHP notice error that identifies an array to string conversi
 
 ***Patch File: [features_override-php_array_to_string_notice-1970474.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/features_override/features_override-php_array_to_string_notice-1970474.patch)***
 
-#### Libraries API - Inheritable Profiles
+#### Libraries API - Inheritable Profiles (developed by [@amcgowanca](http://github.com/amcgowanca))
 
 This patch enables the Libraries API module to take into consideration multiple profiles when performing a libraries directory search. This is a *required* patch if using the Inheritable Profiles patch listed above when using the Libraries API.
 
