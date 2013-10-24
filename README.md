@@ -10,6 +10,12 @@ This patch enables the ability to have inheritable (multiple) profiles allowing 
 
 ***Patch File: [1356276-D7-inheritable-profiles-multi.patch](https://raw.github.com/imagex/imagex_patches/7.x/core/inheritable-profiles/1356276-D7-inheritable-profiles-multi.patch)***
 
+#### Menu Translation - Issue: 951098, Comment: 50
+
+This patch resolves the PHP Notice errors stating that `tab_root_map` is an undefined variable in the `_menu_translate` function located at `includes/menu.inc.`.
+
+***Patch File: [undefined-menu-translate-notice-951098-50.patch](https://raw.github.com/imagex/imagex_patches/7.x/core/undefined-menu-translate-notice-951098-50.patch)***
+
 ## Patches for Contributed Modules
 
 #### Ckeditor - Issue: 1504696, Comment: 58
