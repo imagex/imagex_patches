@@ -78,6 +78,12 @@ This patch allows for the permissions created by the Taxonomy Access Fix module 
 
 ***Patch File: [taxonomy_access_fix-changes-vocab-vid-to-machinename-usage-1637446.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/taxonomy_access_fix/taxonomy_access_fix-changes-vocab-vid-to-machinename-usage-1637446.patch)***
 
+#### UUID Features - Issue: 2072943, Comment: 1
+
+This patch resolves the issue with the Features UI attempting to display the Bean's Title. However, Bean's are not required to have titles and therefore replaces it with the Bean's delta.
+
+***Patch File: [uuid_features-bean-titles-2072943-1.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/uuid_features/uuid_features-bean-titles-2072943-1.patch)***
+
 #### Workbench Moderation - Issue: 1314508, Comment: 70
 
 This patch allows for the workbench moderation's transition's permissions to be exported and re-created during the installation. This resolves the `module cannot be null` error that is presented within the the `user_role_grant_permissions` function of the `user.module`.
