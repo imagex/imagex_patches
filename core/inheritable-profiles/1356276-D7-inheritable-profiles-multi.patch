@@ -1,8 +1,8 @@
 diff --git a/includes/common.inc b/includes/common.inc
-index 0ebe857..2ec895b 100644
+index 0ebe857..cfafdd2 100644
 --- a/includes/common.inc
 +++ b/includes/common.inc
-@@ -232,6 +232,31 @@ function drupal_get_profile() {
+@@ -232,6 +232,30 @@ function drupal_get_profile() {
    return $profile;
  }
  
@@ -20,21 +20,20 @@ index 0ebe857..2ec895b 100644
 +  }
 +  else {
 +    $profiles = variable_get('install_profiles', array(drupal_get_profile()));
-+    while(list($key, $profile) = each($profiles)) {
-+      $path = drupal_get_path('profile', $profile) . '/' . $profile . '.info';
-+      $info = drupal_parse_info_file($path);
-+      if (!empty($info['base profile'])) {
-+        $profiles[] = $info['base profile'];
-+      }
++  }
++  while(list($key, $profile) = each($profiles)) {
++    $path = drupal_get_path('profile', $profile) . '/' . $profile . '.info';
++    $info = drupal_parse_info_file($path);
++    if (!empty($info['base profile'])) {
++      $profiles[] = $info['base profile'];
 +    }
 +  }
-+
 +  return $profiles;
 +}
  
  /**
   * Sets the breadcrumb trail for the current page.
-@@ -5334,25 +5359,26 @@ function drupal_system_listing($mask, $directory, $key = 'name', $min_depth = 1)
+@@ -5334,25 +5358,26 @@ function drupal_system_listing($mask, $directory, $key = 'name', $min_depth = 1)
  
    $searchdir = array($directory);
    $files = array();
