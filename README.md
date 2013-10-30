@@ -30,6 +30,12 @@ This patch fixes a problem where text formats assigned by ckeditor profiles in F
 
 ***Patch File: [ckeditor-ckeditor_features_format-2043365-6.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/ckeditor/ckeditor-ckeditor_features_format-2043365-6.patch)***
 
+### Composer Manager
+
+This patch alters the version of the [Drupal Composer module](http://drupal.org/project/composer) that is downloaded from the 8.x major version to the *7.x-1.x-dev*.
+
+***Patch File: [composer_manager-drush_dl_composer_ver_7.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/composer_manager/composer_manager-drush_dl_composer_ver_7.patch)***
+
 #### Features - Issue: 927566, Comment: 72
 
 This patch enhances features method of identifying menu links, ensuring that each menu link is unique. This patch allows menu links with the same URL to be exported and re-created during the installation.
