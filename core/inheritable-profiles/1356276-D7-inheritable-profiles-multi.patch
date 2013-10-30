@@ -1,8 +1,8 @@
 diff --git a/includes/common.inc b/includes/common.inc
-index 262e1c5..b38425a 100644
+index 0ebe857..2ec895b 100644
 --- a/includes/common.inc
 +++ b/includes/common.inc
-@@ -232,6 +232,24 @@ function drupal_get_profile() {
+@@ -232,6 +232,31 @@ function drupal_get_profile() {
    return $profile;
  }
  
@@ -20,6 +20,13 @@ index 262e1c5..b38425a 100644
 +  }
 +  else {
 +    $profiles = variable_get('install_profiles', array(drupal_get_profile()));
++    while(list($key, $profile) = each($profiles)) {
++      $path = drupal_get_path('profile', $profile) . '/' . $profile . '.info';
++      $info = drupal_parse_info_file($path);
++      if (!empty($info['base profile'])) {
++        $profiles[] = $info['base profile'];
++      }
++    }
 +  }
 +
 +  return $profiles;
@@ -27,7 +34,7 @@ index 262e1c5..b38425a 100644
  
  /**
   * Sets the breadcrumb trail for the current page.
-@@ -5342,25 +5360,26 @@ function drupal_system_listing($mask, $directory, $key = 'name', $min_depth = 1)
+@@ -5334,25 +5359,26 @@ function drupal_system_listing($mask, $directory, $key = 'name', $min_depth = 1)
  
    $searchdir = array($directory);
    $files = array();
@@ -345,7 +352,7 @@ index 7a694e9..75996f5 100644
    // If Drupal is not set up already, we need to create a settings file.
    if (!$install_state['settings_verified']) {
 diff --git a/includes/install.inc b/includes/install.inc
-index 3631c36..60b976c 100644
+index c4bcb88..e8b6e13 100644
 --- a/includes/install.inc
 +++ b/includes/install.inc
 @@ -669,18 +669,31 @@ function drupal_rewrite_settings($settings = array(), $prefix = '') {
@@ -397,7 +404,7 @@ index 3631c36..60b976c 100644
  
    $requirements = array();
  
-@@ -1287,6 +1300,7 @@ function install_profile_info($profile, $locale = 'en') {
+@@ -1280,6 +1293,7 @@ function install_profile_info($profile, $locale = 'en') {
        'dependencies' => array(),
        'description' => '',
        'distribution_name' => 'Drupal',
@@ -406,10 +413,10 @@ index 3631c36..60b976c 100644
        'hidden' => FALSE,
        'php' => DRUPAL_MINIMUM_PHP,
 diff --git a/modules/system/system.module b/modules/system/system.module
-index 2bbcd7f..ab5e996 100644
+index d47ab8a..9f18b1f 100644
 --- a/modules/system/system.module
 +++ b/modules/system/system.module
-@@ -2363,14 +2363,20 @@ function _system_rebuild_module_data() {
+@@ -2362,14 +2362,20 @@ function _system_rebuild_module_data() {
    $modules = drupal_system_listing('/^' . DRUPAL_PHP_FUNCTION_PATTERN . '\.module$/', 'modules', 'name', 0);
  
    // Include the installation profile in modules that are loaded.
@@ -437,7 +444,7 @@ index 2bbcd7f..ab5e996 100644
  
    // Set defaults for module info.
    $defaults = array(
-@@ -2422,7 +2428,11 @@ function _system_rebuild_module_data() {
+@@ -2421,7 +2427,11 @@ function _system_rebuild_module_data() {
      drupal_alter('system_info', $modules[$key]->info, $modules[$key], $type);
    }
  
