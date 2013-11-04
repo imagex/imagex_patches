@@ -1,0 +1,239 @@
+diff --git a/crazyegg.module b/crazyegg.module
+index 4e44726..1b00c02 100644
+--- a/crazyegg.module
++++ b/crazyegg.module
+@@ -1,14 +1,24 @@
+ <?php
+ 
+ /**
++
++/**
+  * Implements hook_permission().
+  */
+ function crazyegg_permission() {
+   return array(
+-      'administer crazy egg' => array(
+-          'title' => t('Administer Crazy Egg'),
+-          'description' => t('Administer account settings and visibility of Crazy Egg on your site.'),
+-      ),
++    'administer crazy egg' => array(
++      'title' => t('Administer Crazy Egg'),
++      'description' => t('Administer account settings and visibility of Crazy Egg on your site.'),
++    ),
++    'administer crazy egg pages' => array(
++      'title' => t('Administer Crazy Egg Pages'),
++      'description' => t('Administer on which pages the Crazy Egg script runs'),
++    ),
++    'access crazy egg settings' => array(
++      'title' => t('Access Crazy Egg Settings'),
++      'description' => t('Access the Crazy Egg settings page.'),
++    ),
+   );
+ }
+ 
+@@ -17,13 +27,13 @@ function crazyegg_permission() {
+  */
+ function crazyegg_menu() {
+   $items['admin/config/system/crazyegg'] = array(
+-      'title' => 'Crazy Egg',
+-      'description' => 'Configure Crazy Egg heat maps on your website.',
+-      'page callback' => 'drupal_get_form',
+-      'page arguments' => array('crazyegg_admin_settings_form'),
+-      'access arguments' => array('administer crazy egg'),
+-      'type' => MENU_NORMAL_ITEM,
+-      'file' => 'includes/admin.inc',
++    'title' => 'Crazy Egg',
++    'description' => 'Configure Crazy Egg heat maps on your website.',
++    'page callback' => 'drupal_get_form',
++    'page arguments' => array('crazyegg_admin_settings_form'),
++    'access arguments' => array('access crazy egg settings'),
++    'type' => MENU_NORMAL_ITEM,
++    'file' => 'includes/admin.inc',
+   );
+ 
+   return $items;
+@@ -43,15 +53,13 @@ function crazyegg_help($path, $arg) {
+  * Implements hook_page_alter() to insert JavaScript to the appropriate scope/region of the page.
+  */
+ function crazyegg_page_alter(&$page) {
+-  global $user;
+-
+   $account_id = variable_get('crazyegg_account_id', '');
+   $crazyegg_enabled = variable_get('crazyegg_enabled', TRUE);
+ 
+-  if ($account_id && $crazyegg_enabled) {
++  if ($account_id && $crazyegg_enabled && _crazyegg_visibility_pages()) {
+ 
+     $scope = 'footer';
+-    
++
+     $account_path = str_pad($account_id, 8, "0", STR_PAD_LEFT);
+     $account_path = substr($account_path, 0, 4) . '/' . substr($account_path, 4, 8);
+     $account_path = "pages/scripts/" . $account_path . ".js";
+@@ -61,10 +69,57 @@ function crazyegg_page_alter(&$page) {
+     $script = '
+       setTimeout(function(){var a=document.createElement("script");
+       var b=document.getElementsByTagName(\'script\')[0];
+-      a.src=document.location.protocol+"//' . $script_host . '/' . $account_path . '";
++      a.src=document.location.protocol+"//' . $script_host . '/' . $account_path . '?"+Math.floor(new Date().getTime()/3600000);
+       a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+       ';
+ 
+     drupal_add_js($script, array('scope' => $scope, 'type' => 'inline'));
+   }
+-}
+\ No newline at end of file
++}
++
++/**
++ * Based on visibility setting this function returns TRUE if Crazy Egg script should
++ * be added to the current page and otherwise FALSE.
++ */
++function _crazyegg_visibility_pages() {
++  static $page_match;
++
++  // Cache visibility result if function is called more than once.
++  if (!isset($page_match)) {
++
++    $visibility = variable_get('crazyegg_visibility_pages', 1);
++    $setting_pages = variable_get('crazyegg_pages', '');
++
++    // Match path if necessary.
++    if (!empty($setting_pages)) {
++      // Convert path to lowercase. This allows comparison of the same path
++      // with different case. Ex: /Page, /page, /PAGE.
++      $pages = drupal_strtolower($setting_pages);
++      if ($visibility < 2) {
++        // Convert the Drupal path to lowercase
++        $path = drupal_strtolower(drupal_get_path_alias($_GET['q']));
++        // Compare the lowercase internal and lowercase path alias (if any).
++        $page_match = drupal_match_path($path, $pages);
++        if ($path != $_GET['q']) {
++          $page_match = $page_match || drupal_match_path($_GET['q'], $pages);
++        }
++        // When $visibility has a value of 0, the tracking code is displayed on
++        // all pages except those listed in $pages. When set to 1, it
++        // is displayed only on those pages listed in $pages.
++        $page_match = !($visibility xor $page_match);
++      }
++      else {
++        $page_match = FALSE;
++      }
++    }
++    else {
++      if ($visibility == '1') {
++        $page_match = FALSE;
++      }
++      else {
++        $page_match = TRUE;
++      }
++    }
++  }
++  return $page_match;
++}
+diff --git a/includes/admin.inc b/includes/admin.inc
+index 07d877d..c991c3d 100644
+--- a/includes/admin.inc
++++ b/includes/admin.inc
+@@ -3,35 +3,86 @@
+ function crazyegg_admin_settings_form() {
+   $form = array();
+ 
+-  $form['crazyegg_enabled'] = array(
++  $form['crazyegg'] = array(
++    '#type' => 'vertical_tabs',
++  );
++
++  if (user_access('administer crazy egg')) {
++    $form['crazyegg']['settings'] = array(
++      '#type' => 'fieldset',
++      '#title' => t('General settings'),
++    );
++
++    $form['crazyegg']['settings']['crazyegg_enabled'] = array(
+       '#type' => 'radios',
+       '#title' => t('Crazy Egg Enabled?'),
+       '#options' => array(
+-          TRUE => t('Yes'),
+-          FALSE => t('No'),
++        TRUE => t('Yes'),
++        FALSE => t('No'),
+       ),
+       '#default_value' => variable_get('crazyegg_enabled', TRUE),
+-  );
++    );
+ 
+-  $form['crazyegg_account_id'] = array(
++    $form['crazyegg']['settings']['crazyegg_account_id'] = array(
+       '#type' => 'textfield',
+       '#title' => t('Crazy Egg Account ID'),
+       '#default_value' => variable_get('crazyegg_account_id', ''),
+       '#description' => '(ex. 00111111)',
+-  );
++    );
+ 
+-  $account_explanation = '';
+-  $account_explanation .= t('This is your numerical CrazyEgg account ID, it is 8 digits long. The easy way to find it is by logging in to your CrazyEgg account and clicking the "What\'s my code" link located at the top of your Dashboard.');
+-  $account_explanation .= '<br />';
+-  $account_explanation .= t('');
+-  $account_explanation .= '<br />';
+-  $account_explanation .= l('http://www.crazyegg.com', 'http://www.crazyegg.com', array('attributes' => array('target' => '_blank')));
++    $account_explanation = '';
++    $account_explanation .= t('This is your numerical CrazyEgg account ID, it is 8 digits long. The easy way to find it is by logging in to your CrazyEgg account and clicking the "What\'s my code" link located at the top of your Dashboard.');
++    $account_explanation .= '<br />';
++    $account_explanation .= t('');
++    $account_explanation .= '<br />';
++    $account_explanation .= l('http://www.crazyegg.com', 'http://www.crazyegg.com', array('attributes' => array('target' => '_blank')));
+ 
+-  $form['account_explanation'] = array(
++    $form['crazyegg']['settings']['account_explanation'] = array(
+       '#type' => 'item',
+       '#title' => t('What Is My Account ID?'),
+       '#markup' => $account_explanation,
+-  );
++    );
++  }
++
++  if (user_access('administer crazy egg pages')) {
++    $form['crazyegg']['page_settings'] = array(
++      '#type' => 'fieldset',
++      '#title' => t('Pages'),
++    );
++
++    $pages = variable_get('crazyegg_pages', '');
++    $visibility = variable_get('crazyegg_visibility_pages', 1);
++
++    // Page specific visibility configurations.
++    $form['crazyegg']['page_settings']['crazyegg_vis_settings'] = array(
++      '#type' => 'fieldset',
++      '#title' => t('Pages'),
++      '#collapsible' => TRUE,
++      '#collapsed' => FALSE,
++    );
++
++    $options = array(
++      t('Every page except the listed pages'),
++      t('The listed pages only'),
++    );
++    $description = t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array('%blog' => 'blog', '%blog-wildcard' => 'blog/*', '%front' => '<front>'));
++
++    $form['crazyegg']['page_settings']['crazyegg_vis_settings']['crazyegg_visibility_pages'] = array(
++      '#type' => 'radios',
++      '#title' => t('Add tracking to specific pages'),
++      '#options' => $options,
++      '#default_value' => $visibility,
++    );
++
++    $form['crazyegg']['page_settings']['crazyegg_vis_settings']['crazyegg_pages'] = array(
++      '#type' => 'textarea',
++      '#title' => t('Pages'),
++      '#title_display' => 'invisible',
++      '#default_value' => $pages,
++      '#description' => $description,
++      '#rows' => 10,
++    );
++  }
+ 
+   return system_settings_form($form);
+ }
+\ No newline at end of file

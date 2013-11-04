@@ -30,11 +30,17 @@ This patch fixes a problem where text formats assigned by ckeditor profiles in F
 
 ***Patch File: [ckeditor-ckeditor_features_format-2043365-6.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/ckeditor/ckeditor-ckeditor_features_format-2043365-6.patch)***
 
-### Composer Manager
+#### Composer Manager
 
 This patch alters the version of the [Drupal Composer module](http://drupal.org/project/composer) that is downloaded from the 8.x major version to the *7.x-1.x-dev*.
 
 ***Patch File: [composer_manager-drush_dl_composer_ver_7.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/composer_manager/composer_manager-drush_dl_composer_ver_7.patch)***
+
+#### Crazyegg - Issue: 1317938, Comment: 9
+
+This patch alters the [Crazyegg](http://drupal.org/project/crazyegg) module to enable the ability for Crazyegg to be enabled/disabled on a per-page basis using standard Drupal visibility settings. The patch is based off of work done in the [Crazyegg issue dedicated to this feature](https://drupal.org/node/1317938). The patch should be applied to the *1.0* version of the module.
+
+***Patch File: [crazyegg-per_page_activation-1317938-9.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/crazyegg/crazyegg-per_page_activation-1317938-9.patch)***
 
 #### Features - Issue: 927566, Comment: 72
 
