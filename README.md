@@ -54,6 +54,14 @@ This patch solves a PHP notice error that identifies an array to string conversi
 
 ***Patch File: [features_override-php_array_to_string_notice-1970474.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/features_override/features_override-php_array_to_string_notice-1970474.patch)***
 
+#### Google Custom Search Engine
+
+This patch alters the [Google Custom Search Engine](http://drupal.org/project/google_cse) module to add autocomplete functionality to search form fields, removes watermark styling from search form fields, and adds 100% width and height styling to search results listing.
+
+Applies to the latest 1.x-dev HEAD of google_cse (commit: 242906103925fca7025d3a12899830a0555521ce)
+
+***Patch File: [google_cse-add_autocomplete_and_styling_changes.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/google_cse/google_cse-add_autocomplete_and_styling_changes.patch)***
+
 #### Libraries API - Inheritable Profiles (developed by [@amcgowanca](http://github.com/amcgowanca))
 
 This patch enables the Libraries API module to take into consideration multiple profiles when performing a libraries directory search. This is a *required* patch if using the Inheritable Profiles patch listed above when using the Libraries API.

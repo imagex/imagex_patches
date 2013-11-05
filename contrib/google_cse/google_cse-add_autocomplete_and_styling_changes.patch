@@ -1,0 +1,87 @@
+diff --git a/google_cse.css b/google_cse.css
+index 9f5274c..dd4a935 100644
+--- a/google_cse.css
++++ b/google_cse.css
+@@ -1,3 +1,4 @@
+ #google-cse-results-searchbox-form div, #google-cse-results-searchbox-form input { margin: 0; display: inline; }
+ #google-cse-results-searchbox-form .form-radios div { display: block; }
+ #google-cse-results-gadget a { margin-left: 2em; }
++#google-cse-results iframe { width:100%; height:90em; }
+diff --git a/google_cse.info b/google_cse.info
+index 99e8903..377109e 100644
+--- a/google_cse.info
++++ b/google_cse.info
+@@ -6,5 +6,11 @@ files[] = google_cse.install
+ files[] = google_cse.module
+ files[] = google_cse.admin.inc
+ files[] = google_cse.theme.inc
+-scripts[] = google_cse.js
+ stylesheets[all][] = google_cse.css
++
++; Information added by drupal.org packaging script on 2011-03-04
++version = "7.x-1.x-dev"
++core = "7.x"
++project = "google_cse"
++datestamp = "1299197199"
++
+diff --git a/google_cse.module b/google_cse.module
+index 89bb34a..1398834 100644
+--- a/google_cse.module
++++ b/google_cse.module
+@@ -162,6 +162,7 @@ function google_cse_init() {
+     'resultsWidth' => intval(variable_get('google_cse_results_width', 600)),
+     'domain' => variable_get('google_cse_domain', 'www.google.com'),
+   )), 'setting');
++  drupal_add_js("http://www.google.ca/jsapi", array('scope' => 'footer'));
+ }
+
+ /**
+@@ -217,7 +218,7 @@ function google_cse_sitesearch_default() {
+ /**
+  * Adds custom submit handler for search form.
+  */
+-function google_cse_form_search_form_alter(&$form, &$form_state, $form_id) {
++function google_cse_form_search_form_alter(&$form, &$form_state) {
+   if ($form['module']['#value'] == 'google_cse') {
+     if (variable_get('google_cse_results_gadget', 1)) {
+       $form['basic']['op']['#suffix'] = theme('google_cse_results_gadget');
+@@ -225,6 +226,16 @@ function google_cse_form_search_form_alter(&$form, &$form_state, $form_id) {
+     google_cse_sitesearch_form($form);
+     $form['#submit'][] = 'google_cse_search_form_submit';
+     $form['#attributes']['class'][] = 'google-cse';
++
++    drupal_add_js("
++      google.load( 'search', '1' );
++      google.setOnLoadCallback( function() {
++        var searchField = jQuery('#search-form input[name=\"keys\"]');
++        google.search.CustomSearchControl.attachAutoCompletion('" . variable_get('google_cse_cx', '') . "', searchField.get(0), 'search-form');
++      });",
++      array('type' => 'inline', 'scope' => 'footer', 'weight' => 5)
++    );
++
+   }
+ }
+
+@@ -240,12 +251,22 @@ function google_cse_search_form_submit($form, &$form_state) {
+ /**
+  * Adds custom submit handler for search block form.
+  */
+-function google_cse_form_search_block_form_alter(&$form, &$form_state, $form_id) {
++function google_cse_form_search_block_form_alter(&$form, &$form_state) {
+   $info = search_get_default_module_info();
+   if ($info['module'] == 'google_cse') {
+     google_cse_sitesearch_form($form);
+     $form['#submit'][] = 'google_cse_search_block_form_submit';
+     $form['#attributes']['class'][] = 'google-cse';
++
++    drupal_add_js("
++      google.load( 'search', '1' );
++      google.setOnLoadCallback( function() {
++        var searchBlockField = jQuery('#search-block-form input[name=\"search_block_form\"]');
++        google.search.CustomSearchControl.attachAutoCompletion('" . variable_get('google_cse_cx', '') . "', searchBlockField.get(0), 'search-block-form');
++      });",
++      array('type' => 'inline', 'scope' => 'footer', 'weight' => 5)
++    );
++
+   }
+ }
