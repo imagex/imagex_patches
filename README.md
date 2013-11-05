@@ -84,6 +84,14 @@ This patch makes Media Crop functionality work with Media 2.x. Patch by Shea.
 
 ***Patch File: [media_crop-7-x.1.x_media-2.x.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media_crop/media_crop-7-x.1.x_media-2.x.patch)***
 
+#### Path Breadcrumbs
+
+This patch alters the [Path Breadcrumbs](http://drupal.org/project/path_breadcrumbs) module to changes some of the validation checks in code and in form validation handler. It removes the right_value validation check in the path_breadcrumbs_ui module and adds some boolean checks to remove PHP errors.
+
+Applies to the 7.x-3.0-beta6 version of this module.
+
+***Patch File: [path_breadcrumbs-validation_changes.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/path_breadcrumbs/path_breadcrumbs-validation_changes.patch)***
+
 #### Taxonomy Access Fix - Issue: 1637446 (developed by [@amcgowanca](http://github.com/amcgowanca))
 
 This patch allows for the permissions created by the Taxonomy Access Fix module to identify the vocabularies using the machine name of the vocabulary and not the vocabulary id. This patch also provides an update path for existing permissions stored within the `{role_permission}` table.
