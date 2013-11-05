@@ -84,6 +84,14 @@ This patch makes Media Crop functionality work with Media 2.x. Patch by Shea.
 
 ***Patch File: [media_crop-7-x.1.x_media-2.x.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media_crop/media_crop-7-x.1.x_media-2.x.patch)***
 
+#### Panels Accordion - Issue: 1965770, Comment: 0
+
+This patch alters the [Panels Accordion](http://drupal.org/project/panels_accordion) module to improve the content editor administration of panels accordions so that an entire region can easily be rendered as an accordion.
+
+Applies to the 1.x-dev HEAD version of the module.
+
+***Patch File: [panels_accordion-remove_pane_style-1965770-0.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/panels_accordion/panels_accordion-remove_pane_style-1965770-0.patch)***
+
 #### Taxonomy Access Fix - Issue: 1637446 (developed by [@amcgowanca](http://github.com/amcgowanca))
 
 This patch allows for the permissions created by the Taxonomy Access Fix module to identify the vocabularies using the machine name of the vocabulary and not the vocabulary id. This patch also provides an update path for existing permissions stored within the `{role_permission}` table.
