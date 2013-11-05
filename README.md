@@ -54,6 +54,12 @@ This patch solves a PHP notice error that identifies an array to string conversi
 
 ***Patch File: [features_override-php_array_to_string_notice-1970474.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/features_override/features_override-php_array_to_string_notice-1970474.patch)***
 
+#### Feeds - Issue: 1989196
+
+This patch alters the [Feeds](http://drupal.org/project/feeds) module to resolve a bug related to its integration with the way date_ical module passes FeedsDateTime objects. This patch eliminates PHP errors related to passing an object to a function expecting a string. At a high level, this patch enables the ability to retrieve and map dates from iCal feeds to Drupal date fields when using an iCal feed as a Feeds source.
+
+***Patch File: [feeds_1989196-feedsdatetime-check.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/feeds/feeds_1989196-feedsdatetime-check.patch)***
+
 #### Libraries API - Inheritable Profiles (developed by [@amcgowanca](http://github.com/amcgowanca))
 
 This patch enables the Libraries API module to take into consideration multiple profiles when performing a libraries directory search. This is a *required* patch if using the Inheritable Profiles patch listed above when using the Libraries API.
