@@ -54,6 +54,22 @@ This patch solves a PHP notice error that identifies an array to string conversi
 
 ***Patch File: [features_override-php_array_to_string_notice-1970474.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/features_override/features_override-php_array_to_string_notice-1970474.patch)***
 
+#### Feeds - Issue: 1989196
+
+This patch alters the [Feeds](http://drupal.org/project/feeds) module to resolve a bug related to its integration with the way date_ical module passes FeedsDateTime objects. This patch eliminates PHP errors related to passing an object to a function expecting a string. At a high level, this patch enables the ability to retrieve and map dates from iCal feeds to Drupal date fields when using an iCal feed as a Feeds source.
+
+Applies to the 2.0-alpha8 version of Feeds.
+
+***Patch File: [feeds_1989196-feedsdatetime-check.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/feeds/feeds_1989196-feedsdatetime-check.patch)***
+
+#### Feeds JSONPath Parser  - Issue: 1083234, Comment: 12
+
+This patch alters the [Feeds JSONPath Parser](http://drupal.org/project/feeds_jsonpath_parser) module to provide libraries support for the jsonpath library.
+
+Applies to the latest 1.x HEAD development version of Feeds JSONPath Parser as of November 5, 2013.
+
+***Patch File: [feeds_jsonpath_parser-libraries-1083234-12.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/feeds_jsonpath_parser/feeds_jsonpath_parser-libraries-1083234-12.patch)***
+
 #### Google Custom Search Engine
 
 This patch alters the [Google Custom Search Engine](http://drupal.org/project/google_cse) module to add autocomplete functionality to search form fields, removes watermark styling from search form fields, and adds 100% width and height styling to search results listing.
@@ -91,6 +107,14 @@ This patch fixes a bug where embedded image crop images aren't rendered in Firef
 This patch makes Media Crop functionality work with Media 2.x. Patch by Shea.
 
 ***Patch File: [media_crop-7-x.1.x_media-2.x.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media_crop/media_crop-7-x.1.x_media-2.x.patch)***
+
+#### Panels Accordion - Issue: 1965770, Comment: 0
+
+This patch alters the [Panels Accordion](http://drupal.org/project/panels_accordion) module to improve the content editor administration of panels accordions so that an entire region can easily be rendered as an accordion.
+
+Applies to the 1.x-dev HEAD version of the module.
+
+***Patch File: [panels_accordion-remove_pane_style-1965770-0.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/panels_accordion/panels_accordion-remove_pane_style-1965770-0.patch)***
 
 #### Taxonomy Access Fix - Issue: 1637446 (developed by [@amcgowanca](http://github.com/amcgowanca))
 
