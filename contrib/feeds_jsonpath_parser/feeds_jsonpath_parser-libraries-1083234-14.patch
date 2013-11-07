@@ -1,5 +1,5 @@
 diff --git a/FeedsJSONPathParser.inc b/FeedsJSONPathParser.inc
-index 37004ba..69458a2 100644
+index e72629c..f6a42ff 100644
 --- a/FeedsJSONPathParser.inc
 +++ b/FeedsJSONPathParser.inc
 @@ -42,8 +42,10 @@ class FeedsJSONPathParser extends FeedsParser {
@@ -26,10 +26,10 @@ index fea7c3e..2f75939 100644
 +dependencies[] = libraries
  core = 7.x
 diff --git a/feeds_jsonpath_parser.install b/feeds_jsonpath_parser.install
-index c282726..5cbc60b 100644
+index c282726..8981180 100644
 --- a/feeds_jsonpath_parser.install
 +++ b/feeds_jsonpath_parser.install
-@@ -10,20 +10,26 @@
+@@ -10,20 +10,30 @@
   */
  function feeds_jsonpath_parser_requirements($phase) {
    $requirements = array();
@@ -41,7 +41,10 @@ index c282726..5cbc60b 100644
 -
 -    if (glob(dirname(__FILE__) . '/jsonpath*.php')) {
 -      $requirements['feeds_jsonpath_parser']['severity'] = REQUIREMENT_OK;
--    }
++    // Make sure the libraries function is available during installation phase
++    if (!function_exists('libraries_get_path')) {
++      module_load_include('module', 'libraries');
+     }
 -    else {
 -      $requirements['feeds_jsonpath_parser']['severity'] = REQUIREMENT_ERROR;
 -      $requirements['feeds_jsonpath_parser']['description'] = $t('The <a href="@jsonpath">JSONPath</a> plugin is missing. <a href="@download">Download</a> and place in the feeds_jsonpath_parser module directory.', array(
