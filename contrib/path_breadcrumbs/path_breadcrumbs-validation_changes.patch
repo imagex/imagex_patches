@@ -1,0 +1,32 @@
+diff --git a/path_breadcrumbs.module b/path_breadcrumbs.module
+index 20bbb89..99b456c 100644
+--- a/path_breadcrumbs.module
++++ b/path_breadcrumbs.module
+@@ -214,11 +214,11 @@ function _path_breadcrumbs_build_breadcrumbs($path_breadcrumb, $contexts = array
+     }
+ 
+     // Set a breadcrumb as a link or as a plain text.
+-    if (isset($path_breadcrumb->paths_prepared[$key]) && $path_breadcrumb->paths_prepared[$key] != '<none>') {
++    if (isset($path_breadcrumb->paths_prepared[$key]) && $path_breadcrumb->paths_prepared[$key] != '<none>' && !empty($path_breadcrumb->paths_prepared[$key])) {
+       $path = _path_breadcrumbs_clean_url($path_breadcrumb->paths_prepared[$key], $options);
+       $breadcrumb[] = l($title, $path, $options);
+     }
+-    elseif (isset($path_breadcrumb->paths_prepared[$key]) && $path_breadcrumb->paths_prepared[$key] == '<none>') {
++    elseif (isset($path_breadcrumb->paths_prepared[$key]) && $path_breadcrumb->paths_prepared[$key] == '<none>' || empty($path_breadcrumb->paths_prepared[$key])) {
+       $breadcrumb[] = check_plain($title);
+     }
+   }
+diff --git a/path_breadcrumbs_ui/path_breadcrumbs_ui.module b/path_breadcrumbs_ui/path_breadcrumbs_ui.module
+index 303d1f4..a629795 100644
+--- a/path_breadcrumbs_ui/path_breadcrumbs_ui.module
++++ b/path_breadcrumbs_ui/path_breadcrumbs_ui.module
+@@ -820,9 +820,6 @@ function _path_breadcrumbs_ui_form_step_breadcrumbs_settings_validate($form, $fo
+       if (empty($value['left_value'])) {
+         form_set_error('breadcrumbs_table][' . $key . '][left_value', t('Link title should contain value.'));
+       }
+-      if (empty($value['right_value'])) {
+-        form_set_error('breadcrumbs_table][' . $key . '][right_value', t('Link path should contain value.'));
+-      }
+     }
+   }
+ }
