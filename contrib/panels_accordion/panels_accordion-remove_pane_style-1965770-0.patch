@@ -1,0 +1,110 @@
+diff --git a/plugins/styles/accordion.inc b/plugins/styles/accordion.inc
+index eec7465..6b9af52 100644
+--- a/plugins/styles/accordion.inc
++++ b/plugins/styles/accordion.inc
+@@ -11,7 +11,6 @@ $plugin = array(
+   'title' => t('Accordion'),
+   'description' => t('Allows the panel pane to be collapsed.'),
+   'render region' => 'panels_accordion_render_region',
+-  'render pane' => 'panels_accordion_render_pane',
+   'settings form' => 'panels_accordion_region_settings_form',
+   'pane settings form' => 'panels_accordion_pane_settings_form',
+ );
+@@ -72,21 +71,21 @@ function panels_accordion_region_settings_form($style_settings) {
+     '#value' => 'See <a href="http://docs.jquery.com/UI/Accordion">http://docs.jquery.com/UI/Accordion</a> for a list of possible values for these options',
+   );
+ 
++  $form['collapsible'] = array(
++      '#type' => 'checkbox',
++      '#title' => t('Allow all sections to be closed at once'),
++      '#default_value' => $style_settings['collapsible'],
++      '#description' => t('Allows collapsing the active section.'),
++    );
++
+   // http://docs.jquery.com/UI/Accordion for how to implement these attributes
+   $form['active'] = array(
+     '#type' => 'textfield',
+     '#title' => t('active'),
+     '#default_value' => isset($style_settings['active']) ? $style_settings['active'] : $style_settings['active'] = 0,
+-    '#description' => t('Selector for the active element. Set to false to display none at start. Needs collapsible: true.'),
++    '#description' => t('Selector for the active element. Enter an integer representing the section you\'d like open by default (eg. the first section = 0). Enter \'false\' to display all closed by default. This requires the \'Allow all sections to be closed at once\' option to be selected.'),
+   );
+ 
+-  $form['collapsible'] = array(
+-      '#type' => 'checkbox',
+-      '#title' => t('Allow for all rows to be closed'),
+-      '#default_value' => $style_settings['collapsible'],
+-      '#description' => t('If you check this on, when the user clicks on an opened item, it will close.'),
+-    );
+-
+   $form['animated'] = array(
+       '#type' => 'select',
+       '#title' => t('Animation effect'),
+@@ -137,6 +136,10 @@ function theme_panels_accordion_render_region($vars) {
+     $val = is_numeric($val) ? $val: "'$val'" ;
+     $options[] = $key. ':' .$val;
+   }
++  // Tells jQuery accordion which element to use as the accordion headers. This
++  // could become a setting in the region style form, but it's probably
++  // unnecessary.
++  $options[] = "header:'h2.pane-title'";
+   $options = '{' .implode(',', $options). '}';
+   // if it's 'true'/'false', convert it back to true/false.
+   $options = str_replace(array("'false'", "'true'"), array("false", "true"), $options);
+@@ -158,56 +161,6 @@ function theme_panels_accordion_render_region($vars) {
+ }
+ 
+ /**
+- * Render callback for panes.
+- *
+- * @ingroup themeable
+- */
+-function theme_panels_accordion_render_pane($vars) {
+-
+-  $content = $vars['content'];
+-  $pane = $vars['pane'];
+-  $display = $vars['display'];
+-  $settings = $vars['settings'];
+-
+-  if (empty($content->content)) {
+-    return;
+-  }
+-
+-  if ($content->content != '') {
+-    if (is_array($content->content)) {
+-      $content->content = drupal_render($content->content);
+-    }
+-
+-    $output = theme('panels_accordion_pane', array('handle' => $content->title, 'content' => $content->content, 'collapsed' => $settings['pane_collapsed'], 'pane' => $pane));
+-  }
+-  else {
+-    $output = theme('panels_pane', array('content' => $content, 'pane' => $pane, 'display' => $display));
+-  }
+-
+-  return $output;
+-}
+-
+-/**
+- * Render callback for panes.
+- *
+- * @ingroup themeable
+- */
+-function theme_panels_accordion_pane($vars) {
+-
+-  $pane_css = $pane_id = '';
+-  if (isset($vars['pane']) && is_object($vars['pane'])) {
+-    $pane_css = $vars['pane']->css;
+-    $pane_id = !empty($pane_css['css_id']) ? ' id="' . $pane_css['css_id'] . '"' : '';
+-    $pane_css = !empty($pane_css['css_class']) ? ' ' . $pane_css['css_class'] : '';
+-  }
+-
+-  $output = '<h3>' . check_plain($vars['handle']) . '</h3>';
+-  $output .= $vars['content'];
+-
+-  return $output;
+-}
+-
+-/**
+  * Render callback for region.
+  *
+  * @ingroup themeable
