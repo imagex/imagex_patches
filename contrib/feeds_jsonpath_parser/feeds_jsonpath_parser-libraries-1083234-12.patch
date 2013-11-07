@@ -1,0 +1,100 @@
+diff --git a/FeedsJSONPathParser.inc b/FeedsJSONPathParser.inc
+index 37004ba..69458a2 100644
+--- a/FeedsJSONPathParser.inc
++++ b/FeedsJSONPathParser.inc
+@@ -42,8 +42,10 @@ class FeedsJSONPathParser extends FeedsParser {
+     if (!is_array($array)) {
+       throw new Exception(t('There was an error decoding the JSON document.'));
+     }
+-    $files = glob(dirname(__FILE__) . '/jsonpath*.php');
+-    require_once reset($files);
++    $library = libraries_load('jsonpath');
++    if (empty($library['loaded'])) {
++      throw new Exception(t('There was an error loading JSONPath.'));
++    }
+ 
+     $all_items = $this->jsonPath($array, $source_config['context']);
+     unset($array);
+diff --git a/feeds_jsonpath_parser.info b/feeds_jsonpath_parser.info
+index fea7c3e..2f75939 100644
+--- a/feeds_jsonpath_parser.info
++++ b/feeds_jsonpath_parser.info
+@@ -4,4 +4,5 @@ files[] = tests/feeds_jsonpath_parser.test
+ files[] = FeedsJSONPathParser.inc
+ package = Feeds
+ dependencies[] = feeds
++dependencies[] = libraries
+ core = 7.x
+diff --git a/feeds_jsonpath_parser.install b/feeds_jsonpath_parser.install
+index c282726..5cbc60b 100644
+--- a/feeds_jsonpath_parser.install
++++ b/feeds_jsonpath_parser.install
+@@ -10,20 +10,26 @@
+  */
+ function feeds_jsonpath_parser_requirements($phase) {
+   $requirements = array();
+-
++  $current = 'jsonpath-0.8.1.php';
+   if ($phase == 'install') {
+     $t = get_t();
+     $requirements['feeds_jsonpath_parser']['title'] = $t('Feeds JSONPath Parser');
+-
+-    if (glob(dirname(__FILE__) . '/jsonpath*.php')) {
+-      $requirements['feeds_jsonpath_parser']['severity'] = REQUIREMENT_OK;
+-    }
+-    else {
+-      $requirements['feeds_jsonpath_parser']['severity'] = REQUIREMENT_ERROR;
+-      $requirements['feeds_jsonpath_parser']['description'] = $t('The <a href="@jsonpath">JSONPath</a> plugin is missing. <a href="@download">Download</a> and place in the feeds_jsonpath_parser module directory.', array(
+-        '@jsonpath' => 'http://goessner.net/articles/JsonPath/',
+-        '@download' => 'http://jsonpath.googlecode.com/svn/trunk/src/php/jsonpath.php',
+-      ));
++    if ($path = libraries_get_path('jsonpath')) {
++      if (!file_exists($path . '/' . $current)) {
++        $requirements['feeds_jsonpath_parser'] = array(
++          'severity' => REQUIREMENT_ERROR,
++          'description' => $t('The <a href="@jsonpath">JSONPath</a> plugin is missing. <a href="@download">Download</a> and place in the libraries/jsonpath directory.', array(
++            '@jsonpath' => 'http://goessner.net/articles/JsonPath/',
++            '@download' => 'http://jsonpath.googlecode.com/files/' . $current,
++          )),
++        );
++      }
++      else {
++        $requirements['feeds_jsonpath_parser'] = array(
++          'severity' => REQUIREMENT_OK,
++          'value' => $t('jsonpath found under !path', array('!path' => $path . '/' . $current)),
++        );
++      }
+     }
+   }
+   return $requirements;
+diff --git a/feeds_jsonpath_parser.module b/feeds_jsonpath_parser.module
+index cf15cba..5c74428 100644
+--- a/feeds_jsonpath_parser.module
++++ b/feeds_jsonpath_parser.module
+@@ -27,3 +27,26 @@ function feeds_jsonpath_parser_feeds_plugins() {
+ function feeds_jsonpath_parser_enable() {
+   cache_clear_all('plugins:feeds:plugins', 'cache');
+ }
++
++/**
++ * Implements hook_libraries_info().
++ */
++function feeds_jsonpath_parser_libraries_info() {
++  $libraries['jsonpath'] = array(
++    'name' => 'JSON Path',
++    'vendor url' => 'https://code.google.com/p/jsonpath/',
++    'download url' => 'http://jsonpath.googlecode.com/svn/trunk/src/php/jsonpath.php',
++    'version arguments' => array(
++      'file' => 'jsonpath-0.8.1.php',
++      'pattern' => '/JSONPath (\S+) -/',
++      'lines' => 5,
++    ),
++    'files' => array(
++      'php' => array(
++        'jsonpath-0.8.1.php',
++      ),
++    ),
++  );
++
++  return $libraries;
++}
