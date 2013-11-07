@@ -62,6 +62,14 @@ Applies to the 2.0-alpha8 version of Feeds.
 
 ***Patch File: [feeds_1989196-feedsdatetime-check.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/feeds/feeds_1989196-feedsdatetime-check.patch)***
 
+#### Feeds JSONPath Parser  - Issue: 1083234, Comment: 12
+
+This patch alters the [Feeds JSONPath Parser](http://drupal.org/project/feeds_jsonpath_parser) module to provide libraries support for the jsonpath library.
+
+Applies to the latest 1.x HEAD development version of Feeds JSONPath Parser as of November 5, 2013.
+
+***Patch File: [feeds_jsonpath_parser-libraries-1083234-12.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/feeds_jsonpath_parser/feeds_jsonpath_parser-libraries-1083234-12.patch)***
+
 #### Libraries API - Inheritable Profiles (developed by [@amcgowanca](http://github.com/amcgowanca))
 
 This patch enables the Libraries API module to take into consideration multiple profiles when performing a libraries directory search. This is a *required* patch if using the Inheritable Profiles patch listed above when using the Libraries API.
