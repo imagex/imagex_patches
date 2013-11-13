@@ -1,12 +1,290 @@
 diff --git a/google_cse.css b/google_cse.css
-index 9f5274c..dd4a935 100644
+index 9f5274c..dba6a02 100644
 --- a/google_cse.css
 +++ b/google_cse.css
-@@ -1,3 +1,4 @@
+@@ -1,3 +1,282 @@
  #google-cse-results-searchbox-form div, #google-cse-results-searchbox-form input { margin: 0; display: inline; }
  #google-cse-results-searchbox-form .form-radios div { display: block; }
  #google-cse-results-gadget a { margin-left: 2em; }
 +#google-cse-results iframe { width:100%; height:90em; }
++
++#cse .gsc-results .gsc-cursor-box {
++  margin: 24px 0;
++  list-style: none;
++  text-align: center;
++  overflow: hidden;
++  *zoom: 1; }
++
++#cse .gsc-cursor-page {
++  display: inline-block;
++  padding: 5px 14px;
++  background-color: #fff;
++  border: 1px solid #ddd;
++  -webkit-border-radius: 15px;
++  -moz-border-radius: 15px;
++  -ms-border-radius: 15px;
++  -o-border-radius: 15px;
++  border-radius: 15px;
++  text-decoration:none;
++  color: #51b5e0;
++}
++#cse .gsc-cursor-current-page {
++  color: #5c5c5c;
++}
++#cse .gsc-cursor-page:hover,
++#cse .gsc-cursor-page:active,
++#cse .gsc-cursor-page:focus {
++  text-decoration: none;
++  background-color: #f5f5f5;
++  outline:none; }
++#cse .gsc-cursor-current-page:hover,
++#cse .gsc-cursor-current-page:active,
++#cse .gsc-cursor-current-page:focus {
++  text-decoration: none;
++  background-color: #fff; }
++
++#cse {
++  font-family:avenir, sans-serif;
++}
++#cse td {
++  border:none;
++}
++
++/**
++ * Default theme
++ *
++ */
++/* Slight reset to make the preview have ample padding. */
++.cse .gsc-control-cse,
++.gsc-control-cse {
++  padding: 1em;
++  width: auto;
++}
++.cse .gsc-control-wrapper-cse,
++.gsc-control-wrapper-cse {
++  width: 100%;
++}
++#cse .gsc-wrapper {
++  max-width:650px;
++}
++.cse .gsc-branding,
++.gsc-branding {
++  display: none;
++}
++.cse .gsc-control-cse div,
++.gsc-control-cse div {
++  position: normal;
++}
++/* Selector for entire element. */
++.cse .gsc-control-cse,
++.gsc-control-cse {
++  background-color: #ffffff;
++  border: 1px solid #ffffff;
++}
++.cse .gsc-control-cse:after,
++.gsc-control-cse:after {
++  content:".";
++  display:block;
++  height:0;
++  clear:both;
++  visibility:hidden;
++}
++#cse .cse .gsc-resultsHeader,
++#cse .gsc-resultsHeader {
++  border: block;
++  margin:0;
++}
++#cse .gsc-resultsHeader td {
++  padding:0;
++  margin:0;
++}
++#cse .gsc-above-wrapper-area table,
++#cse .gsc-result-info {
++  margin:0;
++  padding:0;
++}
++table.gsc-search-box td.gsc-input {
++  padding-right: 12px;
++}
++input.gsc-input {
++  border-color: #D9D9D9;
++  font-size: 13px;
++  padding: 1px 6px;
++}
++/* Search button */
++.cse input.gsc-search-button,
++input.gsc-search-button {
++  font-family: inherit;
++  font-size: 11px;
++  font-weight: bold;
++  color: #000;
++  padding: 0 8px;
++  height: 20px;
++  min-width: 54px;
++  background-color: #CECECE;
++  border: 1px solid #666;
++  border-radius: 2px;
++  -moz-border-radius: 2px;
++  -webkit-border-radius: 2px;
++}
++/* Inactive tab */
++.cse .gsc-tabHeader.gsc-tabhInactive,
++.gsc-tabHeader.gsc-tabhInactive {
++  border-bottom: none;
++  color: #666666;
++  background-color: #e9e9e9;
++  border: 1px solid;
++  border-color: #e9e9e9;
++  border-bottom: none;
++}
++/* Active tab */
++.cse .gsc-tabHeader.gsc-tabhActive,
++.gsc-tabHeader.gsc-tabhActive {
++  background-color: #FFFFFF;
++  border: 1px solid;
++  border-top: 2px solid;
++  border-color: #e9e9e9;
++  border-top-color: #FF9900;
++  border-bottom: none;
++}
++/* This is the tab bar bottom border. */
++.cse .gsc-tabsArea,
++.gsc-tabsArea {
++  margin-top: 1em;
++  border-bottom: 1px solid #e9e9e9;
++}
++/* Inner wrapper for a result */
++#cse .cse .gsc-webResult.gsc-result,
++#cse .gsc-webResult.gsc-result,
++#cse .gsc-imageResult-column,
++#cse .gsc-imageResult-classic {
++  padding:.5em .25em;
++  border-bottom: 1px dotted #E5E5E5;
++  margin-bottom:0;
++}
++/* Result hover event styling */
++#cse .cse .gsc-webResult.gsc-result:hover,
++#cse .gsc-webResult.gsc-result:hover,
++#cse .gsc-webResult.gsc-result.gsc-promotion:hover,
++#cse .gsc-results .gsc-imageResult-classic:hover,
++#cse .gsc-results .gsc-imageResult-column:hover {
++  border-bottom: 1px dotted #E5E5E5;
++  background: #F6FBFE;
++}
++#cse .cse .gsc-webResult.gsc-result:hover td,
++#cse .gsc-webResult.gsc-result:hover td,
++#cse .gsc-webResult.gsc-result.gsc-promotion:hover td,
++#cse .gsc-results .gsc-imageResult-classic:hover td,
++#cse .gsc-results .gsc-imageResult-column:hover td {
++  background: #F6FBFE;
++}
++#cse .gsc-table-result {
++  margin:0;
++}
++/*Promotion Settings*/
++/* The entire promo */
++#cse .gsc-webResult.gsc-result.gsc-promotion,
++.gsc-webResult.gsc-result.gsc-promotion,
++#cse table td.gs-promotion-text-cell {
++  background-color: #FFF7ED;
++}
++
++.cse .gsc-webResult.gsc-result.gsc-promotion,
++.gsc-webResult.gsc-result.gsc-promotion {
++  border-color: #336699;
++}
++
++/* Promotion links */
++.cse .gs-promotion a.gs-title:link,
++.gs-promotion a.gs-title:link,
++.cse .gs-promotion a.gs-title:link *,
++.gs-promotion a.gs-title:link *,
++.cse .gs-promotion .gs-snippet a:link,
++.gs-promotion .gs-snippet a:link {
++  color: #51B5E0;
++}
++.cse .gs-promotion a.gs-title:visited,
++.gs-promotion a.gs-title:visited,
++.cse .gs-promotion a.gs-title:visited *,
++.gs-promotion a.gs-title:visited *,
++.cse .gs-promotion .gs-snippet a:visited,
++.gs-promotion .gs-snippet a:visited {
++  color: #51B5E0;
++}
++.cse .gs-promotion a.gs-title:hover,
++.gs-promotion a.gs-title:hover,
++.cse .gs-promotion a.gs-title:hover *,
++.gs-promotion a.gs-title:hover *,
++.cse .gs-promotion .gs-snippet a:hover,
++.gs-promotion .gs-snippet a:hover {
++  color: #51B5E0;
++}
++.cse .gs-promotion a.gs-title:active,
++.gs-promotion a.gs-title:active,
++.cse .gs-promotion a.gs-title:active *,
++.gs-promotion a.gs-title:active *,
++.cse .gs-promotion .gs-snippet a:active,
++.gs-promotion .gs-snippet a:active {
++  color: #51B5E0;
++}
++/* Promotion snippet */
++.cse .gs-promotion .gs-snippet,
++.gs-promotion .gs-snippet,
++.cse .gs-promotion .gs-title .gs-promotion-title-right,
++.gs-promotion .gs-title .gs-promotion-title-right,
++.cse .gs-promotion .gs-title .gs-promotion-title-right *,
++.gs-promotion .gs-title .gs-promotion-title-right * {
++  color: #000000;
++}
++/* Promotion url */
++.cse .gs-promotion .gs-visibleUrl,
++.gs-promotion .gs-visibleUrl {
++  color: #008000;
++}
++/* Style for auto-completion table
++ * .gsc-completion-selected : styling for a suggested query which the user has moused-over
++ * .gsc-completion-container : styling for the table which contains the completions
++ */
++.gsc-completion-selected {
++  background: #EEE;
++}
++.gsc-completion-container {
++  font-family: Arial, sans-serif;
++  font-size: 13px;
++  background: white;
++  border: 1px solid #CCC;
++  border-top-color: #D9D9D9;
++  margin-left: 0;
++  margin-right: 0;
++  /* The top, left, and width are set in JavaScript. */
++}
++.gsc-completion-title {
++  color: #0000CC;
++}
++.gsc-completion-snippet {
++  color: #000000;
++}
++
++#cse .gs-snippet {
++  line-height: 20px;
++}
++
++/* Full URL */
++.gs-webResult div.gs-visibleUrl-short,
++.gs-promotion div.gs-visibleUrl-short {
++  display: none;
++}
++#cse .gs-webResult div.gs-visibleUrl-long,
++#cse .gs-promotion div.gs-visibleUrl-long {
++  display: block;
++  color:#008000;
++}
++
++#cse a,
++#cse a b {
++  color: #51b5e0;
++  text-decoration: none;
++}
 diff --git a/google_cse.info b/google_cse.info
 index 99e8903..377109e 100644
 --- a/google_cse.info
@@ -25,18 +303,22 @@ index 99e8903..377109e 100644
 +datestamp = "1299197199"
 +
 diff --git a/google_cse.module b/google_cse.module
-index 89bb34a..1398834 100644
+index 89bb34a..27edf3a 100644
 --- a/google_cse.module
 +++ b/google_cse.module
-@@ -162,6 +162,7 @@ function google_cse_init() {
+@@ -162,6 +162,11 @@ function google_cse_init() {
      'resultsWidth' => intval(variable_get('google_cse_results_width', 600)),
      'domain' => variable_get('google_cse_domain', 'www.google.com'),
    )), 'setting');
-+  drupal_add_js("http://www.google.ca/jsapi", array('scope' => 'footer'));
++  drupal_add_js('https://www.google.com/jsapi', array('scope' => 'footer'));
++  drupal_add_js("
++    google.load('search', '1');",
++    array('type' => 'inline', 'scope' => 'footer', 'weight' => 1)
++  );
  }
-
+ 
  /**
-@@ -217,7 +218,7 @@ function google_cse_sitesearch_default() {
+@@ -217,7 +222,7 @@ function google_cse_sitesearch_default() {
  /**
   * Adds custom submit handler for search form.
   */
@@ -45,13 +327,12 @@ index 89bb34a..1398834 100644
    if ($form['module']['#value'] == 'google_cse') {
      if (variable_get('google_cse_results_gadget', 1)) {
        $form['basic']['op']['#suffix'] = theme('google_cse_results_gadget');
-@@ -225,6 +226,16 @@ function google_cse_form_search_form_alter(&$form, &$form_state, $form_id) {
+@@ -225,6 +230,15 @@ function google_cse_form_search_form_alter(&$form, &$form_state, $form_id) {
      google_cse_sitesearch_form($form);
      $form['#submit'][] = 'google_cse_search_form_submit';
      $form['#attributes']['class'][] = 'google-cse';
 +
 +    drupal_add_js("
-+      google.load( 'search', '1' );
 +      google.setOnLoadCallback( function() {
 +        var searchField = jQuery('#search-form input[name=\"keys\"]');
 +        google.search.CustomSearchControl.attachAutoCompletion('" . variable_get('google_cse_cx', '') . "', searchField.get(0), 'search-form');
@@ -61,8 +342,8 @@ index 89bb34a..1398834 100644
 +
    }
  }
-
-@@ -240,12 +251,22 @@ function google_cse_search_form_submit($form, &$form_state) {
+ 
+@@ -240,12 +254,21 @@ function google_cse_search_form_submit($form, &$form_state) {
  /**
   * Adds custom submit handler for search block form.
   */
@@ -75,7 +356,6 @@ index 89bb34a..1398834 100644
      $form['#attributes']['class'][] = 'google-cse';
 +
 +    drupal_add_js("
-+      google.load( 'search', '1' );
 +      google.setOnLoadCallback( function() {
 +        var searchBlockField = jQuery('#search-block-form input[name=\"search_block_form\"]');
 +        google.search.CustomSearchControl.attachAutoCompletion('" . variable_get('google_cse_cx', '') . "', searchBlockField.get(0), 'search-block-form');
@@ -85,3 +365,83 @@ index 89bb34a..1398834 100644
 +
    }
  }
+ 
+diff --git a/google_cse.theme.inc b/google_cse.theme.inc
+index bdc89fe..eaf8470 100644
+--- a/google_cse.theme.inc
++++ b/google_cse.theme.inc
+@@ -14,10 +14,10 @@ function template_preprocess_google_cse_results(&$variables) {
+   $variables['noscript'] = t('!google, or enable JavaScript to view them here.', array('!google' => l(t('View the results at Google'), 'http://'. variable_get('google_cse_domain', 'www.google.com') .'/cse', array('query' => $query))));
+   $variables['prefix'] = filter_xss_admin(variable_get('google_cse_results_prefix', ''));
+   $variables['suffix'] = filter_xss_admin(variable_get('google_cse_results_suffix', ''));
+-
+   if (google_cse_validate_request()) {
+-    drupal_add_js($variables['path'] . '/google_cse_results.js', array('scope' => 'footer'));
+-    drupal_add_js('https://www.google.com/afsonline/show_afs_search.js', array('type' => 'external', 'scope' => 'footer'));
++    drupal_add_js(drupal_get_path('module', 'google_cse') . '/google_cse_results.js', array('scope' => 'footer'));
++    // TODO: Inspect configuration first, then load correct css here.
++    // drupal_add_css('//www.google.com/cse/style/look/default.css', 'external');
+   }
+ }
+ 
+diff --git a/google_cse_results.js b/google_cse_results.js
+index 7edaa0b..24f17a0 100644
+--- a/google_cse_results.js
++++ b/google_cse_results.js
+@@ -5,3 +5,36 @@ var googleSearchFrameborder = 0;
+ var googleSearchDomain = Drupal.settings.googleCSE.domain;
+ var googleSearchPath = '/cse';
+ var googleSearchQueryString = 'query';
++Drupal.google_cse_results = Drupal.google_cse_results || {};
++
++Drupal.google_cse_results.load_results = function() {
++  var customSearchOptions = {};
++  customSearchOptions['adoptions'] = {'layout': 'noTop'};
++  var customSearchControl = new google.search.CustomSearchControl(Drupal.settings.googleCSE.cx, customSearchOptions);
++  customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
++  customSearchControl.setLinkTarget(google.search.Search.LINK_TARGET_SELF);
++  var options = new google.search.DrawOptions();
++  options.enableSearchResultsOnly();
++  customSearchControl.draw('cse', options);
++  var urlParams = Drupal.google_cse_results.parse_params_from_url();
++  var queryParamName = 'query';
++  if (urlParams[queryParamName]) {
++    customSearchControl.execute(urlParams[queryParamName]);
++  }
++}
++
++Drupal.google_cse_results.parse_params_from_url = function () {
++  var params = {};
++  var parts = window.location.search.substr(1).split('\x26');
++  for (var i = 0; i < parts.length; i++) {
++    var keyValuePair = parts[i].split('=');
++    var key = decodeURIComponent(keyValuePair[0]);
++    params[key] = keyValuePair[1] ?
++      decodeURIComponent(keyValuePair[1].replace(/\+/g, ' ')) :
++      keyValuePair[1];
++  }
++  return params;
++}
++
++// google.load('search', '1', {language : 'en'});
++google.setOnLoadCallback(Drupal.google_cse_results.load_results, true);
+diff --git a/google_cse_results.tpl.php b/google_cse_results.tpl.php
+index bffe88d..d1e6109 100644
+--- a/google_cse_results.tpl.php
++++ b/google_cse_results.tpl.php
+@@ -1,6 +1,3 @@
+-<?php
+-?>
+-
+ <?php if ($prefix): ?>
+   <div class="google-cse-results-prefix"><?php print $prefix; ?></div>
+ <?php endif; ?>
+@@ -15,6 +12,8 @@
+   </noscript>
+ </div>
+ 
++<div id="cse" style="width: 100%;">Loading</div>
++
+ <?php if ($suffix): ?>
+   <div class="google-cse-results-suffix"><?php print $suffix; ?></div>
+ <?php endif; ?>
