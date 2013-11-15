@@ -46,6 +46,8 @@ This patch alters the [Crazyegg](http://drupal.org/project/crazyegg) module to e
 
 This patch enhances features method of identifying menu links, ensuring that each menu link is unique. This patch allows menu links with the same URL to be exported and re-created during the installation.
 
+Applies to the 2.0-rc2 version of Features.
+
 ***Patch File: [features-multiple-link-path-927566-72.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/features/features-multiple-link-path-927566-72.patch)***
 
 #### Features Override - Issue: 1970474, Comment: 5
