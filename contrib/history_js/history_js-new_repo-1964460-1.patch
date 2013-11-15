@@ -1,0 +1,58 @@
+diff --git a/README.txt b/README.txt
+index 2f42209..e98cc90 100644
+--- a/README.txt
++++ b/README.txt
+@@ -7,13 +7,13 @@ gracefully degrades to hash changes where the html5 popstates aren't supported.
+ Installation:
+ 
+   1. Download the latest version of History.js
+-     (from https://github.com/balupton/History.js)
++     (from https://github.com/browserstate/history.js)
+ 
+   2. Extract the contents of the archive to:
+-     <Drupal>/sites/<example.com | all>/libraries/balupton-history.js
++     <Drupal>/sites/<example.com | all>/libraries/history.js
+ 
+      Such that the bundled directory exists at:
+-     <...>/libraries/balupton-history.js/scripts/bundled
++     <...>/libraries/history.js/scripts/bundled
+ 
+ 
+   3. Verify You have the Libraries API installed
+diff --git a/history_js.install b/history_js.install
+index 1119f4b..7716734 100644
+--- a/history_js.install
++++ b/history_js.install
+@@ -19,7 +19,7 @@ function history_js_requirements($phase) {
+ 
+       // If the libray folder was not found the library is not installed properly.
+       module_load_include('module', 'libraries');
+-      $libpath = libraries_get_path('balupton-history.js');
++      $libpath = libraries_get_path('history.js');
+       if (is_dir($libpath) != TRUE) {
+         $readme_url = url( drupal_get_path('module', 'history_js') . '/README.txt');
+         $problems[] = $t('The History.js library folder was not found. Please see <a href="@url">README.txt</a> in the history_js module directory for proper library installation details.', array('@url' => $readme_url));
+diff --git a/history_js.module b/history_js.module
+index f928b94..625f14b 100644
+--- a/history_js.module
++++ b/history_js.module
+@@ -56,15 +56,15 @@ function history_js_menu() {
+  */
+ function history_js_library() {
+   $libraries = array();
+-  $libpath = libraries_get_path('balupton-history.js');
++  $libpath = libraries_get_path('history.js');
+   $compatibility = variable_get('history_js_compatibility', 'html4+html5');
+   $implementation = variable_get('history_js_implementation', 'jquery');
+   $jspath = $libpath . '/scripts/bundled/' . $compatibility . '/' . $implementation . '.history.js';
+ 
+   $libraries['history.js'] = array(
+-    'title' => "Balupton's History.js",
+-    'website' => 'https://github.com/balupton/History.js/',
+-    'version' => '1.7.1-r2',
++    'title' => "History.js",
++    'website' => 'https://github.com/browserstate/history.js',
++    'version' => '1.7.1',
+     'js' => array($jspath => array())
+   );
+ 

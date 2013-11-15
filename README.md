@@ -80,6 +80,14 @@ Applies to the latest 1.x-dev HEAD of google_cse (commit: 242906103925fca7025d3a
 
 ***Patch File: [google_cse-add_autocomplete_and_styling_changes.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/google_cse/google_cse-add_autocomplete_and_styling_changes.patch)***
 
+#### History.js - Issue: 1964460, Comment: 1
+
+This patch updates the library source repo from https://github.com/balupton/History.js to https://github.com/browserstate/history.js and library path
+
+Applies to 7.x-1.0
+
+***Patch File: [history_js-new_repo-1964460-1.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/history_js/history_js-new_repo-1964460-1.patch)***
+
 #### Libraries API - Inheritable Profiles (developed by [@amcgowanca](http://github.com/amcgowanca))
 
 This patch enables the Libraries API module to take into consideration multiple profiles when performing a libraries directory search. This is a *required* patch if using the Inheritable Profiles patch listed above when using the Libraries API.
