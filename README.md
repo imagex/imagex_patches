@@ -84,7 +84,7 @@ This patch updates the library source repo from https://github.com/balupton/Hist
 
 Applies to 7.x-1.0
 
-***Patch File: [history_js-new_repo-1964460-1.patch](https://dl.dropboxusercontent.com/u/57694/imagex/patches/history_js-new_repo-1964460-1.patch)***
+***Patch File: [history_js-new_repo-1964460-1.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/history_js/history_js-new_repo-1964460-1.patch)***
 
 #### Libraries API - Inheritable Profiles (developed by [@amcgowanca](http://github.com/amcgowanca))
 
