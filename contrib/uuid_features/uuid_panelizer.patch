@@ -1,0 +1,65 @@
+diff --git a/uuid_features.module b/uuid_features.module
+index ca6a94c..525e584 100644
+--- a/uuid_features.module
++++ b/uuid_features.module
+@@ -473,3 +473,60 @@ function _uuid_features_file_field_import_file(&$file) {
+ 
+   return TRUE;
+ }
++
++/**
++ * Implements hook_entity_presave().
++ */
++function uuid_features_entity_presave($entity, $type) { 
++  _uuid_panelizer_entity_presave($entity, $type);
++}
++
++/**
++ * Implements hook_entity_insert().
++ */
++function uuid_features_entity_insert($entity, $type) { 
++  _uuid_panelizer_entity_insert($entity, $type);
++}
++
++/**
++ * Implements hook_entity_presave().
++ */
++function _uuid_panelizer_entity_presave($entity, $type) { 
++  if (isset($entity->panelizer)) {
++    $fix_panel = FALSE;
++    foreach ($entity->panelizer as $name => $panel) {
++      (object) $panel = $panel;
++      if ($panel->entity_id != entity_id($type, $entity)) {
++        $fix_panel = TRUE;
++        break;
++      }
++    }
++    if ($fix_panel) {
++      $fixes = &drupal_static(__FUNCTION__, array());
++      $fixes[$entity->uuid] = $entity->panelizer;
++      unset($entity->panelizer);
++    }
++  }
++}
++
++/**
++ * Implements hook_entity_insert().
++ */
++function _uuid_panelizer_entity_insert($entity, $type) { 
++  $fixes = &drupal_static('uuid_panelizer_entity_presave', array());
++  if (isset($fixes[$entity->uuid])) {
++    list($id, $vid, $bundle) = entity_extract_ids($type, $entity);
++    foreach ($fixes[$entity->uuid] as $name => $panel) {
++      // We need to rebuild the panelizer objects correctly
++      $panel = (object) $panel;
++      $panel->entity_id = $id;
++      $panel->revision_id = $vid;
++      $panel->display = (object) $panel->display;
++      foreach($panel->display->content as &$pane) {
++        $pane = (object) $pane;
++      }
++      $entity->panelizer[$name] = $panel;
++    }
++    unset($fixes[$entity->uuid]);
++  }
++}
