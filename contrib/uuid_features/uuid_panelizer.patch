@@ -1,5 +1,5 @@
 diff --git a/uuid_features.module b/uuid_features.module
-index ca6a94c..525e584 100644
+index ca6a94c..b43c219 100644
 --- a/uuid_features.module
 +++ b/uuid_features.module
 @@ -473,3 +473,60 @@ function _uuid_features_file_field_import_file(&$file) {
@@ -29,7 +29,7 @@ index ca6a94c..525e584 100644
 +    $fix_panel = FALSE;
 +    foreach ($entity->panelizer as $name => $panel) {
 +      (object) $panel = $panel;
-+      if ($panel->entity_id != entity_id($type, $entity)) {
++      if (isset($panel->entity_id) && $panel->entity_id != entity_id($type, $entity)) {
 +        $fix_panel = TRUE;
 +        break;
 +      }
@@ -47,7 +47,7 @@ index ca6a94c..525e584 100644
 + */
 +function _uuid_panelizer_entity_insert($entity, $type) { 
 +  $fixes = &drupal_static('uuid_panelizer_entity_presave', array());
-+  if (isset($fixes[$entity->uuid])) {
++  if (isset($entity->uuid) && isset($fixes[$entity->uuid])) {
 +    list($id, $vid, $bundle) = entity_extract_ids($type, $entity);
 +    foreach ($fixes[$entity->uuid] as $name => $panel) {
 +      // We need to rebuild the panelizer objects correctly
