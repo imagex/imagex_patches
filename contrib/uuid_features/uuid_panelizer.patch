@@ -1,5 +1,5 @@
 diff --git a/uuid_features.module b/uuid_features.module
-index ca6a94c..b43c219 100644
+index ca6a94c..16127a3 100644
 --- a/uuid_features.module
 +++ b/uuid_features.module
 @@ -473,3 +473,60 @@ function _uuid_features_file_field_import_file(&$file) {
@@ -46,7 +46,7 @@ index ca6a94c..b43c219 100644
 + * Implements hook_entity_insert().
 + */
 +function _uuid_panelizer_entity_insert($entity, $type) { 
-+  $fixes = &drupal_static('uuid_panelizer_entity_presave', array());
++  $fixes = &drupal_static('_uuid_panelizer_entity_presave', array());
 +  if (isset($entity->uuid) && isset($fixes[$entity->uuid])) {
 +    list($id, $vid, $bundle) = entity_extract_ids($type, $entity);
 +    foreach ($fixes[$entity->uuid] as $name => $panel) {
