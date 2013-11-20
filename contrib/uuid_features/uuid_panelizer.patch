@@ -1,5 +1,5 @@
 diff --git a/uuid_features.module b/uuid_features.module
-index ca6a94c..16127a3 100644
+index ca6a94c..7dd267a 100644
 --- a/uuid_features.module
 +++ b/uuid_features.module
 @@ -473,3 +473,60 @@ function _uuid_features_file_field_import_file(&$file) {
@@ -28,7 +28,7 @@ index ca6a94c..16127a3 100644
 +  if (isset($entity->panelizer)) {
 +    $fix_panel = FALSE;
 +    foreach ($entity->panelizer as $name => $panel) {
-+      (object) $panel = $panel;
++      $panel = (object) $panel;
 +      if (isset($panel->entity_id) && $panel->entity_id != entity_id($type, $entity)) {
 +        $fix_panel = TRUE;
 +        break;
