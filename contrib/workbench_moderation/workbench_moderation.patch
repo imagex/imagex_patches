@@ -1,0 +1,13 @@
+diff --git a/workbench_moderation.module b/workbench_moderation.module
+index 3370981..0f217e0 100644
+--- a/workbench_moderation.module
++++ b/workbench_moderation.module
+@@ -1455,7 +1455,7 @@ function workbench_moderation_states_next($current_state, $account = NULL, $node
+ function workbench_moderation_moderate($node, $state) {
+   global $user;
+ 
+-  $old_revision = $node->workbench_moderation['my_revision'];
++  $old_revision = (object)$node->workbench_moderation['my_revision'];
+ 
+   // Get the number of revisions for this node with vids greater than $node->vid
+   $vid_count = db_select('node_revision', 'r')
