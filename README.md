@@ -140,6 +140,14 @@ This patch allows for the permissions created by the Taxonomy Access Fix module 
 
 ***Patch File: [taxonomy_access_fix-changes-vocab-vid-to-machinename-usage-1637446.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/taxonomy_access_fix/taxonomy_access_fix-changes-vocab-vid-to-machinename-usage-1637446.patch)***
 
+#### Twitter - Issue: 2142177 (developed by [@kevinchampion](http://github.com/kevinchampion))
+
+This patch alters the [Twitter](http://drupal.org/project/twitter) module to add a missing API hook invocation.
+
+Applies to 6.0-alpha2
+
+***Patch File: [twitter-2142177-1.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/twitter/twitter-2142177-1.patch)***
+
 #### UUID Features - Issue: 2072943, Comment: 1
 
 This patch resolves the issue with the Features UI attempting to display the Bean's Title. However, Bean's are not required to have titles and therefore replaces it with the Bean's delta.
@@ -160,7 +168,7 @@ This patch allows for the workbench moderation's transition's permissions to be 
 
 #### Workbench Moderation - Feature Import Errors
 
-This patch fixes a bug that prevents content from being imported with features_uuid that use workbench_moderation 
+This patch fixes a bug that prevents content from being imported with features_uuid that use workbench_moderation
 
 ***Patch File: [workbench_moderation.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/workbench_moderation/workbench_moderation.patch)***
 
