@@ -158,6 +158,12 @@ This patch allows for the workbench moderation's transition's permissions to be 
 
 ***Patch File: [1314508-workbench-moderation-features.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/workbench_moderation/1314508-workbench-moderation-features.patch)***
 
+#### Workbench Moderation - Feature Import Errors
+
+This patch fixes a bug that prevents content from being imported with features_uuid that use workbench_moderation 
+
+***Patch File: [workbench_moderation.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/workbench_moderation/workbench_moderation.patch)***
+
 ## How to use these patches
 
 Patches should not be applied directly to the codebase that is committed to repositories as a result of increased effort to update the codebase when a new version of core, contributed modules and or themes are released. Instead, it is recommended that you make use of the `drush make` process and a `drupal-org.make` file for applying patches to projects.
