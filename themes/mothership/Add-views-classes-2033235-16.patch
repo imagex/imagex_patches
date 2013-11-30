@@ -1,0 +1,26 @@
+diff --git a/mothership/templates/views-view.tpl.php b/mothership/templates/views-view.tpl.php
+index 4b75590..294c4d1 100644
+--- a/mothership/templates/views-view.tpl.php
++++ b/mothership/templates/views-view.tpl.php
+@@ -5,8 +5,8 @@
+ -->
+ <?php } ?>
+ 
+-<?php if(!empty($css_class)){ ?>
+-<div class="<?php print $css_class; ?>">
++<?php if(!empty($css_class) || !empty($classes)){ ?>
++<div class="<?php print $css_class . $classes ?>">
+ <?php } ?>
+ 
+   <?php print render($title_prefix); ?>
+@@ -68,8 +68,8 @@
+     </div>
+   <?php endif; ?>
+ 
+-<?php if(!empty($css_class)){ ?>
+-</div> <?php /* class view */ ?>
++<?php if(!empty($css_class) || !empty($classes)){ ?>
++</div>
+ <?php } ?>
+ <?php if( theme_get_setting('mothership_poorthemers_helper') ){ ?>
+ <!-- /views view.tpl.php -->
