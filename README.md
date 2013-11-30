@@ -172,6 +172,18 @@ This patch fixes a bug that prevents content from being imported with features_u
 
 ***Patch File: [workbench_moderation.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/workbench_moderation/workbench_moderation.patch)***
 
+## Patches for Contributed Modules
+
+#### Mothership - Issue: 2033235, Comment: 16
+
+See https://drupal.org/node/2033235
+
+The current version of Mothership (7.x-2.10) doesn't properly wrap the views template with the views classes. This breaks ajax functionality.
+
+This patch will fix that problem by reinserting the views classes.
+
+***Patch File: [Add-views-classes-2033235-16.patch](https://raw.github.com/imagex/imagex_patches/7.x/themes/mothership/Add-views-classes-2033235-16.patch)***
+
 ## How to use these patches
 
 Patches should not be applied directly to the codebase that is committed to repositories as a result of increased effort to update the codebase when a new version of core, contributed modules and or themes are released. Instead, it is recommended that you make use of the `drush make` process and a `drupal-org.make` file for applying patches to projects.
