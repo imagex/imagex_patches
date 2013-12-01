@@ -1,0 +1,69 @@
+diff --git a/modules/menu.workbench_access.inc b/modules/menu.workbench_access.inc
+index 3c554ed..ec21bae 100644
+--- a/modules/menu.workbench_access.inc
++++ b/modules/menu.workbench_access.inc
+@@ -86,6 +86,12 @@ function menu_workbench_access_configuration(&$form, &$form_state) {
+     '#description' => t('If checked, when creating nodes users will not be able to choose a parent menu item to which they do not have editorial access.'),
+     '#default_value' => variable_get('workbench_access_menu_limit', 1),
+   );
++  $form['menu_workbench_access_info']['workbench_access_menu_override'] = array(
++    '#type' => 'checkbox',
++    '#title' => t('Permissions override for creating new menu items.'),
++    '#description' => t('If checked, this will give your editors the permission to create new menu items without having the global %permission permission set.', array('%permission' => 'administer menus')),
++    '#default_value' => variable_get('workbench_access_menu_override', 0),
++  );
+ }
+ 
+ /**
+@@ -289,6 +295,12 @@ function menu_workbench_access_default_form_alter(&$form, &$form_state, $options
+     return;
+   }
+ 
++  // Force access to the menu to allow users to create new menu items without
++  // having the global administer menu permissions checked.
++  if(variable_get('workbench_access_menu_override', 0)) {
++    $form['menu']['#access'] = TRUE;
++  }
++
+   // Note that we require menu data for access control.
+   $form['menu']['enabled']['#description'] = t('To enforce access control, this content must be placed in the menu.');
+ 
+diff --git a/workbench_access.module b/workbench_access.module
+index 99ac8e8..289ec94 100644
+--- a/workbench_access.module
++++ b/workbench_access.module
+@@ -706,6 +706,11 @@ function workbench_access_node_presave($node) {
+   if (isset($node->workbench_access) && is_array($node->workbench_access)) {
+     $node->workbench_access = array_unique($node->workbench_access);
+   }
++
++  // Make sure we have an array or our tokens will fail out.
++  if (!is_array($node->workbench_access)) {
++    $node->workbench_access = array($node->workbench_access);
++  }
+ }
+ 
+ /**
+@@ -1418,9 +1423,9 @@ function workbench_access_form_alter(&$form, $form_state, $form_id) {
+     // Provide a form element.
+     workbench_access_node_form_element($form, $form_state);
+   }
+-  else {
+-    workbench_access_default_form_element($form, $form_state);
+-  }
++
++  workbench_access_default_form_element($form, $form_state);
++
+ }
+ 
+ /**
+@@ -1576,6 +1581,9 @@ function workbench_access_default_form_element(&$form, &$form_state) {
+  * @see workbench_access_get_assigned_fields()
+  */
+ function workbench_access_find_form_elements(&$form) {
++  if (variable_get('workbench_access_custom_form', 1)) {
++    return;
++  }
+   $active = workbench_access_get_active_tree();
+   $form['workbench_access_fields'] = array(
+     '#type' => 'value',
