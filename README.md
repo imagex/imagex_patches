@@ -172,7 +172,7 @@ This patch fixes a bug that prevents content from being imported with features_u
 
 ***Patch File: [workbench_moderation.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/workbench_moderation/workbench_moderation.patch)***
 
-## Patches for Contributed Modules
+## Patches for Contributed Themes
 
 #### Mothership - Issue: 2033235, Comment: 16
 
