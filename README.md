@@ -18,11 +18,11 @@ This patch resolves the PHP Notice errors stating that `tab_root_map` is an unde
 
 ## Patches for Contributed Modules
 
-#### Ckeditor - Issue: 1504696, Comment: 58
+#### Ckeditor - Issue: 1504696, Comment: 85
 
 This is a follow up patch to the one Kevin created to add media 2.x support to ckeditor.
 
-***Patch File: [ckeditor_1504696_58.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/ckeditor/ckeditor_1504696_58.patch)***
+***Patch File: [ckeditor_1504696_85.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/ckeditor/ckeditor_1504696_85.patch)***
 
 #### Ckeditor - Issue: 2043365, Comment: 6
 
