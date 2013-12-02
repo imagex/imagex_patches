@@ -160,6 +160,14 @@ This patch adds support in uuid_features for panelizer entities. This allows pan
 
 ***Patch File: [uuid_panelizer.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/uuid_features/uuid_panelizer.patch)***
 
+#### Workbench Access - Issue: 1996418, Comment: 13
+
+This patch alters the [Workbench Access](http://drupal.org/project/workbench_access) module to add an admin configuration setting that allows users to edit a node's menu item even if they don't have the administer menus permission. When workbench_access schema is set to use menu/s to define the access sections, it can be configured to rely on the content's actual menu item placement to define the node's section. In order to do this the content editor needs permission to place the node in the menu in question. The default menu permissions are too broad and can create situations where the user has too much permission.
+
+Applies to 1.x-dev
+
+***Patch File: [workbench_access-1996418-13.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/workbench_access/workbench_access-1996418-13.patch)***
+
 #### Workbench Moderation - Issue: 1314508, Comment: 70
 
 This patch allows for the workbench moderation's transition's permissions to be exported and re-created during the installation. This resolves the `module cannot be null` error that is presented within the the `user_role_grant_permissions` function of the `user.module`.
