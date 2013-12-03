@@ -6,13 +6,13 @@ The following is a collection of patches that are used on a regular basis during
 
 #### Inheritable Profiles (developed by [@amcgowanca](http://github.com/amcgowanca))
 
-###### Standard dependency check
+##### Standard dependency check
 
 This patch enables the ability to have inheritable (multiple) profiles allowing for one installation profile to depend on another. Drupal currently supports the inheritable themes or "base themes" but does not support this functionality for profiles. Therefore, this patch was created to be contributed back into the Drupal 7 core, in addition to it solving code management and product architecture problems previously faced.
 
 ***Patch File: [1356276-D7-inheritable-profiles-multi.patch](https://raw.github.com/imagex/imagex_patches/7.x/core/inheritable-profiles/1356276-D7-inheritable-profiles-multi.patch)***
 
-###### Deep dependency check
+##### Deep dependency check
 
 This patch is derived from that of the inheritable profiles, however performs a deep dependency check for all modules, not just those listed within a profile's `.info` file.
 
