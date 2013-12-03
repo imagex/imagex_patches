@@ -16,7 +16,7 @@ This patch enables the ability to have inheritable (multiple) profiles allowing 
 
 This patch is derived from that of the inheritable profiles, however performs a deep dependency check for all modules, not just those listed within a profile's `.info` file.
 
-***Patch File: [1356276-D7-inheritable-profiles-multi-enforce-dependencies.patch](https://raw.github.com/imagex/imagex_patches/7.x/core/inheritable-profiles/1356276-D7-inheritable-profiles-multi-enforce-dependencies.patch)***
+***Patch File: [1356276-D7-inheritable-profiles-multi-enforce-dependencies.patch](https://raw.github.com/imagex/imagex_patches/7.x/core/inheritable-profiles/1356276-D7-inhertiable-profiles-multi-enforce-dependencies.patch)***
 
 #### Menu Translation - Issue: 951098, Comment: 50
 
