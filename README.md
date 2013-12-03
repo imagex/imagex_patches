@@ -18,6 +18,12 @@ This patch is derived from that of the inheritable profiles, however performs a 
 
 ***Patch File: [1356276-D7-inheritable-profiles-multi-enforce-dependencies.patch](https://raw.github.com/imagex/imagex_patches/7.x/core/inheritable-profiles/1356276-D7-inhertiable-profiles-multi-enforce-dependencies.patch)***
 
+#### File Field - Issue: 2066275
+
+Fixes the file field properties from being overwritten on load.
+
+***Patch File: [2066275-file-field-load-merge-order.patch](https://raw.github.com/imagex/imagex_patches/7.x/core/2066275-file-field-load-merge-order.patch)***
+
 #### Menu Translation - Issue: 951098, Comment: 50
 
 This patch resolves the PHP Notice errors stating that `tab_root_map` is an undefined variable in the `_menu_translate` function located at `includes/menu.inc.`.
