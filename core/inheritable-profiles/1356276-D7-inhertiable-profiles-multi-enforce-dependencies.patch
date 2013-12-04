@@ -351,10 +351,10 @@ index 83f1873..e2cb7c0 100644
    // If Drupal is not set up already, we need to create a settings file.
    if (!$install_state['settings_verified']) {
 diff --git a/includes/install.inc b/includes/install.inc
-index 3631c36..60c2a16 100644
+index 3631c36..5968612 100644
 --- a/includes/install.inc
 +++ b/includes/install.inc
-@@ -669,18 +669,31 @@ function drupal_rewrite_settings($settings = array(), $prefix = '') {
+@@ -669,31 +669,58 @@ function drupal_rewrite_settings($settings = array(), $prefix = '') {
   *   The list of modules to install.
   */
  function drupal_verify_profile($install_state) {
@@ -390,28 +390,39 @@ index 3631c36..60c2a16 100644
  
    // Get a list of modules that exist in Drupal's assorted subdirectories.
    $present_modules = array();
-@@ -688,12 +701,18 @@ function drupal_verify_profile($install_state) {
-     $present_modules[] = $present_module->name;
+   foreach (drupal_system_listing('/^' . DRUPAL_PHP_FUNCTION_PATTERN . '\.module$/', 'modules', 'name', 0) as $present_module) {
+-    $present_modules[] = $present_module->name;
++    $present_module_path = drupal_get_path('module', $present_module->name);
++    $present_modules[$present_module->name] = drupal_parse_info_file($present_module_path . '/' . $present_module->name . '.info');
    }
  
+-  // The installation profile is also a module, which needs to be installed
+-  // after all the other dependencies have been installed.
+-  $present_modules[] = drupal_get_profile();
 +  $dependencies = array();
 +  // Recursively seek all dependencies; not just those of the profiles.
 +  foreach ($profile_dependencies as $profile_dependency) {
 +    _drupal_verify_profile_dependencies($dependencies, $profile_dependency);
 +  }
-+
-   // The installation profile is also a module, which needs to be installed
-   // after all the other dependencies have been installed.
--  $present_modules[] = drupal_get_profile();
-+  $present_modules = array_merge($present_modules, drupal_get_profiles());
  
    // Verify that all of the profile's required modules are present.
 -  $missing_modules = array_diff($info['dependencies'], $present_modules);
-+  $missing_modules = array_diff($dependencies, $present_modules);
++  $missing_modules = array();
++  foreach ($dependencies as $dependency) {
++    // Check early if the module even exists, continue early on.
++    if (isset($present_modules[$dependency['name']])) {
++      if ($incompatible = drupal_check_incompatibility($dependency, $present_modules[$dependency['name']]['version'])) {
++        $missing_modules[] = $dependency['name'] . $incompatible;
++      }
++    }
++    else {
++      $missing_modules[] = $dependency['name'];
++    }
++  }
  
    $requirements = array();
  
-@@ -713,6 +732,35 @@ function drupal_verify_profile($install_state) {
+@@ -713,6 +740,49 @@ function drupal_verify_profile($install_state) {
  }
  
  /**
@@ -426,7 +437,7 @@ index 3631c36..60c2a16 100644
 + *   The module name to load dependencies for.
 + */
 +function _drupal_verify_profile_dependencies(array &$dependencies, $module) {
-+  if (in_array($module, $dependencies)) {
++  if (isset($dependencies[$module])) {
 +    // Exit early if $module already has been checked.
 +    return;
 +  }
@@ -436,8 +447,22 @@ index 3631c36..60c2a16 100644
 +    $module_info = drupal_parse_info_file($module_info_file);
 +    if (!empty($module_info['dependencies'])) {
 +      foreach ($module_info['dependencies'] as $dependency) {
-+        $dependencies[] = $dependency;
-+        _drupal_verify_profile_dependencies($dependencies, $dependency);
++        $dependency = drupal_parse_dependency($dependency);
++        if (empty($dependency['versions'])) {
++          // Create default versions array in case no versions
++          // were found while parsing dependency.
++          $dependency['versions'] = array();
++        }
++
++        if (isset($dependencies[$dependency['name']])) {
++          $dependencies[$dependency['name']]['versions'] = array_merge($dependencies[$dependency['name']]['versions'], $dependency['versions']);
++        }
++        else {
++          $dependencies[$dependency['name']] = $dependency;
++        }
++
++        // Recursively call this function one self.
++        _drupal_verify_profile_dependencies($dependencies, $dependency['name']);
 +      }
 +    }
 +  }
@@ -447,7 +472,7 @@ index 3631c36..60c2a16 100644
   * Installs the system module.
   *
   * Separated from the installation of other modules so core system
-@@ -1287,6 +1335,7 @@ function install_profile_info($profile, $locale = 'en') {
+@@ -1287,6 +1357,7 @@ function install_profile_info($profile, $locale = 'en') {
        'dependencies' => array(),
        'description' => '',
        'distribution_name' => 'Drupal',
