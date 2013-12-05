@@ -64,6 +64,15 @@ Applies to the 2.0-rc2 version of Features.
 
 ***Patch File: [features-multiple-link-path-927566-72.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/features/features-multiple-link-path-927566-72.patch)***
 
+#### Features - Issue: 5430938, Comment: 81
+
+This patch enhances features by providing a new alter hook "hook_features_export_render_alter" which allows the final features code to be altered by being saved to file.
+Related issue: [https://drupal.org/comment/5430938](https://drupal.org/comment/5430938)
+
+Applies to the 2.x version of Features.
+
+***Patch File: [features-1317054-81.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/features/features-1317054-81.patch)***
+
 #### Features Override - Issue: 1970474, Comment: 5
 
 This patch solves a PHP notice error that identifies an array to string conversion that occurs when viewing the features/features_override page. The error also affects the visual representation of the exports.
