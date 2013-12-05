@@ -1,0 +1,46 @@
+diff --git a/redirect.install b/redirect.install
+index fa67aaa..9e2c0b7 100644
+--- a/redirect.install
++++ b/redirect.install
+@@ -38,8 +38,8 @@ function redirect_schema() {
+         'description' => 'The {users}.uid of the user who created the redirect.',
+       ),
+       'source' => array(
+-        'type' => 'varchar',
+-        'length' => 255,
++        'type' => 'text',
++        'size' => 'medium',
+         'not null' => TRUE,
+         'description' => 'The source path to redirect from.',
+       ),
+@@ -95,7 +95,7 @@ function redirect_schema() {
+     ),
+     'indexes' => array(
+       'expires' => array('type', 'access'),
+-      'source_language' => array('source', 'language'),
++      'source_language' => array(array('source', 255), 'language'),
+     ),
+   );
+ 
+@@ -264,6 +264,21 @@ function redirect_update_7000(&$sandbox) {
+ }
+ 
+ /**
++ * Increase the maximum length of the source URL.
++ */
++function redirect_update_7100(&$sandbox) {
++  db_drop_index('redirect', 'source_language');
++  db_change_field('redirect', 'source', 'source', array(
++    'type' => 'text',
++    'size' => 'medium',
++    'not null' => TRUE,
++    'description' => 'The source path to redirect from.',
++  ), array(
++    'indexes' => array('source_language' => array(array('source', 255), 'language')),
++  ));
++}
++
++/**
+  * Migrate a path redirect redirect to a redirect redirect.
+  */
+ function _redirect_migrate_path_redirect_redirect($old_redirect) {
