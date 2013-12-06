@@ -177,6 +177,10 @@ This patch resolves the issue with the Features UI attempting to display the Bea
 
 ***Patch File: [uuid_features-bean-titles-2072943-1.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/uuid_features/uuid_features-bean-titles-2072943-1.patch)***
 
+#### UUID Features - File Field Import (developed by [@amcgowanca](http://github.com/amcgowanca))
+
+***Patch File: [invalid-argument-foreach-var-field.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/uuid_features/invalid-argument-foreach-var-field.patch)***
+
 #### UUID Features - Panelizer (developed by [@arcaneadam](http://github.com/arcaneadam))
 
 This patch adds support in uuid_features for panelizer entities. This allows panelized entities that were exported using uuid to be imported and have their panelized content updated with the new entity_id and inserted into the Database.
