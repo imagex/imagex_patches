@@ -93,4 +93,3 @@ index 5ac4ec5..4079075 100644
 +  $code = implode("\n", $output);
    return array('taxonomy_default_vocabularies' => $code);
  }
- 
