@@ -1,0 +1,13 @@
+diff --git a/modules/file/file.field.inc b/modules/file/file.field.inc
+index c841f60..f21e361 100644
+--- a/modules/file/file.field.inc
++++ b/modules/file/file.field.inc
+@@ -217,7 +217,7 @@ function file_field_presave($entity_type, $entity, $field, $instance, $langcode,
+   // cleaned up.
+   foreach ($items as $item) {
+     $file = file_load($item['fid']);
+-    if (!$file->status) {
++    if ($file && !$file->status) {
+       $file->status = FILE_STATUS_PERMANENT;
+       file_save($file);
+     }

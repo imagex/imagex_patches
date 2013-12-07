@@ -24,6 +24,12 @@ Fixes the file field properties from being overwritten on load.
 
 ***Patch File: [2066275-file-field-load-merge-order.patch](https://raw.github.com/imagex/imagex_patches/7.x/core/2066275-file-field-load-merge-order.patch)***
 
+#### File Field (developed by [@amcgowanca](http://github.com/amcgowanca))
+
+This patch ensures that the file field presave hook implementation does not perform a `file_save` should `file_load` return FALSE.
+
+***Patch File: [file_field_presave-file-load-check.patch](https://raw.github.com/imagex/imagex_patches/7.x/core/file_field_presave-file-load-check.patch)***
+
 #### Menu Translation - Issue: 951098, Comment: 50
 
 This patch resolves the PHP Notice errors stating that `tab_root_map` is an undefined variable in the `_menu_translate` function located at `includes/menu.inc.`.
