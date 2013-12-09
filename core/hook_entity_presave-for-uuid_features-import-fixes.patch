@@ -1,0 +1,36 @@
+diff --git a/modules/file/file.field.inc b/modules/file/file.field.inc
+index c841f60..a992119 100644
+--- a/modules/file/file.field.inc
++++ b/modules/file/file.field.inc
+@@ -216,10 +216,11 @@ function file_field_presave($entity_type, $entity, $field, $instance, $langcode,
+   // permanent status, so that it will not be removed when temporary files are
+   // cleaned up.
+   foreach ($items as $item) {
+-    $file = file_load($item['fid']);
+-    if (!$file->status) {
+-      $file->status = FILE_STATUS_PERMANENT;
+-      file_save($file);
++    if ($item && $file = file_load($item['fid'])) {
++      if (!$file->status) {
++        $file->status = FILE_STATUS_PERMANENT;
++        file_save($file);
++      }
+     }
+   }
+ }
+diff --git a/modules/image/image.field.inc b/modules/image/image.field.inc
+index 6d1867c..ec5ea07 100644
+--- a/modules/image/image.field.inc
++++ b/modules/image/image.field.inc
+@@ -232,9 +232,8 @@ function image_field_presave($entity_type, $entity, $field, $instance, $langcode
+ 
+   // Determine the dimensions if necessary.
+   foreach ($items as &$item) {
+-    if (!isset($item['width']) || !isset($item['height'])) {
+-      $info = image_get_info(file_load($item['fid'])->uri);
+-
++    if ($item && (!isset($item['width']) || !isset($item['height'])) && $file = file_load($item['fid'])) {
++      $info = image_get_info($file->uri);
+       if (is_array($info)) {
+         $item['width'] = $info['width'];
+         $item['height'] = $info['height'];
