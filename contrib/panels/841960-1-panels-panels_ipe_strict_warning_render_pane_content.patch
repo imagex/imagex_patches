@@ -1,0 +1,12 @@
+diff --git a/panels_ipe/plugins/display_renderers/panels_renderer_ipe.class.php b/panels_ipe/plugins/display_renderers/panels_renderer_ipe.class.php
+index 1666454..fad9cec 100644
+--- a/panels_ipe/plugins/display_renderers/panels_renderer_ipe.class.php
++++ b/panels_ipe/plugins/display_renderers/panels_renderer_ipe.class.php
+@@ -138,6 +138,7 @@ class panels_renderer_ipe extends panels_renderer_editor {
+     $content = parent::render_pane_content($pane);
+     // Ensure that empty panes have some content.
+     if (empty($content) || empty($content->content)) {
++      $content = new stdClass();
+       // Get the administrative title.
+       $content_type = ctools_get_content_type($pane->type);
+       $title = ctools_content_admin_title($content_type, $pane->subtype, $pane->configuration, $this->display->context);
