@@ -1,0 +1,11 @@
+diff --git a/plugins/content_types/entity_context/entity_field.inc b/plugins/content_types/entity_context/entity_field.inc
+index 2da4044..89c507d 100644
+--- a/plugins/content_types/entity_context/entity_field.inc
++++ b/plugins/content_types/entity_context/entity_field.inc
+@@ -262,5 +262,5 @@ function ctools_entity_field_content_type_formatter_styles_submit($form, &$form_
+ function ctools_entity_field_content_type_admin_title($subtype, $conf, $context) {
+   list($bundle, $field_name) = explode(':', $subtype);
+   ctools_include('fields');
+-  return t('"@s" @field', array('@s' => $context->identifier, '@field' => ctools_field_label($field_name)));
++  return t('"@s" @field', array('@s' => isset($context->identifier) ? $context->identifier : '', '@field' => ctools_field_label($field_name)));
+ }

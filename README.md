@@ -62,6 +62,14 @@ This patch alters the [Crazyegg](http://drupal.org/project/crazyegg) module to e
 
 ***Patch File: [crazyegg-per_page_activation-1317938-9.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/crazyegg/crazyegg-per_page_activation-1317938-9.patch)***
 
+#### Ctools - Issue: 1828534, Comment: 5
+
+This patch alters the [Ctools](http://drupal.org/project/ctools) module to to fix a warning "Trying to get property of non-object". The patch is taken from work done in an [issue dedicated to this error](https://drupal.org/node/1828534).
+
+Applies to the 1.3 version of Ctools.
+
+***Patch File: [ctools-non-object-warning-1828534-5.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/ctools/ctools-non-object-warning-1828534-5.patch)***
+
 #### Features - Issue: 927566, Comment: 72
 
 This patch enhances features method of identifying menu links, ensuring that each menu link is unique. This patch allows menu links with the same URL to be exported and re-created during the installation.
