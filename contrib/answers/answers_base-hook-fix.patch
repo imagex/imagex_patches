@@ -1,0 +1,13 @@
+diff --git a/answers.module b/answers.module
+index 061f0bf..0a2fcd9 100644
+--- a/answers.module
++++ b/answers.module
+@@ -128,7 +128,7 @@ function answers_theme() {
+     $theme['node__answer'] = array(
+       'template' => 'node--answer',
+       'path' => $path,
+-      'original hook' => 'node',
++      'base hook' => 'node',
+     );
+   }
+   return $theme;
