@@ -38,6 +38,14 @@ This patch resolves the PHP Notice errors stating that `tab_root_map` is an unde
 
 ## Patches for Contributed Modules
 
+#### Answers
+
+Fixes incorrect `hook_theme` usage of Drupal 6 option `original hook` which results in constant PHP notice warning when overriding the `node--answer.tpl` file.
+
+Applies to 3.x branch.
+
+***Patch File: [answers_base-hook-fix.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/answers/answers_base-hook-fix.patch)***
+
 #### Ckeditor - Issue: 1504696, Comment: 85
 
 This is a follow up patch to the one Kevin created to add media 2.x support to ckeditor.
