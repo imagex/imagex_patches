@@ -171,6 +171,14 @@ Applies to the 1.x-dev HEAD version of the module.
 
 ***Patch File: [panels_accordion-remove_pane_style-1965770-0.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/panels_accordion/panels_accordion-remove_pane_style-1965770-0.patch)***
 
+#### Panelizer Permissions - Issue 1968876, Comment: 10
+
+This patch exposes the "allow panels
+choice" to permissions, as opposed to anyone having access that can edit the node.
+
+***Patch File: [panels_accordion-remove_pane_style-1965770-0.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/panelizer/1968876-10-panelizer-choice_permission_check_display_mode.patch)***
+
+
 #### Path Breadcrumbs
 
 This patch alters the [Path Breadcrumbs](http://drupal.org/project/path_breadcrumbs) module to changes some of the validation checks in code and in form validation handler. It removes the right_value validation check in the path_breadcrumbs_ui module and adds some boolean checks to remove PHP errors.
