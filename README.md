@@ -176,7 +176,7 @@ Applies to the 1.x-dev HEAD version of the module.
 This patch exposes the "allow panels
 choice" to permissions, as opposed to anyone having access that can edit the node.
 
-***Patch File: [panels_accordion-remove_pane_style-1965770-0.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/panelizer/1968876-10-panelizer-choice_permission_check_display_mode.patch)***
+***Patch File: [panelizer-choice_permission_check_display_mode.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/panelizer/1968876-10-panelizer-choice_permission_check_display_mode.patch)***
 
 
 #### Path Breadcrumbs
