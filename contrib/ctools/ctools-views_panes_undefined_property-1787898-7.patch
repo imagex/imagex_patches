@@ -1,0 +1,17 @@
+diff --git a/views_content/plugins/content_types/views_panes.inc b/views_content/plugins/content_types/views_panes.inc
+index a27a26c..1f10fa4 100644
+--- a/views_content/plugins/content_types/views_panes.inc
++++ b/views_content/plugins/content_types/views_panes.inc
+@@ -139,7 +139,12 @@
+   $view->set_display($display);
+   views_content_views_panes_add_defaults($conf, $view);
+ 
+-  if (!$view->display_handler->access($GLOBALS['user']) || !$view->display_handler->panel_pane_display) {
++if (
++      !$view->display_handler->access($GLOBALS['user']) 
++      || !isset($view->display_handler->panel_pane_display) 
++      || !$view->display_handler->panel_pane_display
++      
++  ) {
+     return;
+   }
