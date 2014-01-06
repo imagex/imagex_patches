@@ -1,0 +1,39 @@
+diff --git a/workbench_moderation.module b/workbench_moderation.module
+index f510e2e..e5e4f03 100644
+--- a/workbench_moderation.module
++++ b/workbench_moderation.module
+@@ -1564,19 +1564,21 @@ function workbench_moderation_store($node) {
+   }
+   watchdog('Workbench moderation', 'Saved node revision: %node as live version for node %live.', array('%node' => $node->vid, '%live' => $node->nid), WATCHDOG_NOTICE, l($node->title, 'node/' . $node->nid));
+   $live_revision = workbench_moderation_node_live_load($node);
+-  // Make sure we're published.
+-  $live_revision->status = 1;
+-  // Don't create a new revision.
+-  $live_revision->revision = 0;
+-  // Prevent another moderation record from being written.
+-  $live_revision->workbench_moderation['updating_live_revision'] = TRUE;
+-
+-  // Reset flag from taxonomy_field_update() so that {taxonomy_index} values aren't written twice.
+-  $taxonomy_index_flag = &drupal_static('taxonomy_field_update', array());
+-  unset($taxonomy_index_flag[$node->nid]);
+-
+-  // Save the node.
+-  node_save($live_revision);
++  if (!empty($live_revision)) {
++    // Make sure we're published.
++    $live_revision->status = 1;
++    // Don't create a new revision.
++    $live_revision->revision = 0;
++    // Prevent another moderation record from being written.
++    $live_revision->workbench_moderation['updating_live_revision'] = TRUE;
++
++    // Reset flag from taxonomy_field_update() so that {taxonomy_index} values aren't written twice.
++    $taxonomy_index_flag = &drupal_static('taxonomy_field_update', array());
++    unset($taxonomy_index_flag[$node->nid]);
++
++    // Save the node.
++    node_save($live_revision);
++  }
+ }
+ 
+ /**
