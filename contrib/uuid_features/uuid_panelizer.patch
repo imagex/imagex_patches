@@ -1,11 +1,12 @@
 diff --git a/uuid_features.module b/uuid_features.module
-index ca6a94c..7dd267a 100644
+index c42f4ef..236a88f 100644
 --- a/uuid_features.module
 +++ b/uuid_features.module
-@@ -473,3 +473,60 @@ function _uuid_features_file_field_import_file(&$file) {
+@@ -493,3 +493,72 @@ function _uuid_features_file_field_import_file(&$file) {
  
    return TRUE;
  }
++
 +
 +/**
 + * Implements hook_entity_presave().
@@ -22,12 +23,23 @@ index ca6a94c..7dd267a 100644
 +}
 +
 +/**
++ * Implements hook_entity_update().
++ */
++function uuid_features_entity_update($entity, $type) { 
++  _uuid_panelizer_entity_insert($entity, $type);
++}
++
++/**
 + * Implements hook_entity_presave().
 + */
 +function _uuid_panelizer_entity_presave($entity, $type) { 
 +  if (isset($entity->panelizer)) {
 +    $fix_panel = FALSE;
 +    foreach ($entity->panelizer as $name => $panel) {
++      if (is_array($panel)) {
++        $fix_panel = TRUE;
++        break;
++      }
 +      $panel = (object) $panel;
 +      if (isset($panel->entity_id) && $panel->entity_id != entity_id($type, $entity)) {
 +        $fix_panel = TRUE;
