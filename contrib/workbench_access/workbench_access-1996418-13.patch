@@ -38,8 +38,10 @@ index 99ac8e8..289ec94 100644
    }
 +
 +  // Make sure we have an array or our tokens will fail out.
-+  if (!is_array($node->workbench_access)) {
-+    $node->workbench_access = array($node->workbench_access);
++  if (isset($node->workbench_access)) {
++    if (!is_array($node->workbench_access)) {
++      $node->workbench_access = array($node->workbench_access);
++    }
 +  }
  }
  
