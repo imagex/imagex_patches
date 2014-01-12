@@ -13,12 +13,12 @@ index 3c554ed..ec21bae 100644
 +    '#default_value' => variable_get('workbench_access_menu_override', 0),
 +  );
  }
- 
+
  /**
 @@ -289,6 +295,12 @@ function menu_workbench_access_default_form_alter(&$form, &$form_state, $options
      return;
    }
- 
+
 +  // Force access to the menu to allow users to create new menu items without
 +  // having the global administer menu permissions checked.
 +  if(variable_get('workbench_access_menu_override', 0)) {
@@ -27,7 +27,7 @@ index 3c554ed..ec21bae 100644
 +
    // Note that we require menu data for access control.
    $form['menu']['enabled']['#description'] = t('To enforce access control, this content must be placed in the menu.');
- 
+
 diff --git a/workbench_access.module b/workbench_access.module
 index 99ac8e8..289ec94 100644
 --- a/workbench_access.module
@@ -38,13 +38,11 @@ index 99ac8e8..289ec94 100644
    }
 +
 +  // Make sure we have an array or our tokens will fail out.
-+  if (isset($node->workbench_access)) {
-+    if (!is_array($node->workbench_access)) {
-+      $node->workbench_access = array($node->workbench_access);
-+    }
++  if (!is_array($node->workbench_access)) {
++    $node->workbench_access = array($node->workbench_access);
 +  }
  }
- 
+
  /**
 @@ -1418,9 +1423,9 @@ function workbench_access_form_alter(&$form, $form_state, $form_id) {
      // Provide a form element.
@@ -57,7 +55,7 @@ index 99ac8e8..289ec94 100644
 +  workbench_access_default_form_element($form, $form_state);
 +
  }
- 
+
  /**
 @@ -1576,6 +1581,9 @@ function workbench_access_default_form_element(&$form, &$form_state) {
   * @see workbench_access_get_assigned_fields()
@@ -69,3 +67,22 @@ index 99ac8e8..289ec94 100644
    $active = workbench_access_get_active_tree();
    $form['workbench_access_fields'] = array(
      '#type' => 'value',
+
+
+diff --git a/workbench_access.module b/workbench_access.module
+index f507d77..1f436db 100644
+--- a/workbench_access.module
++++ b/workbench_access.module
+@@ -708,8 +708,10 @@ function workbench_access_node_presave($node) {
+   }
+
+   // Make sure we have an array or our tokens will fail out.
+-  if (!is_array($node->workbench_access)) {
+-    $node->workbench_access = array($node->workbench_access);
++  if (isset($node->workbench_access)) {
++    if (!is_array($node->workbench_access)) {
++      $node->workbench_access = array($node->workbench_access);
++    }
+   }
+ }
+
