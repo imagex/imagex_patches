@@ -169,6 +169,12 @@ This patch makes Media Crop functionality work with Media 2.x. Patch by Shea.
 
 ***Patch File: [media_crop-7-x.1.x_media-2.x.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media_crop/media_crop-7-x.1.x_media-2.x.patch)***
 
+#### Panels - Issue: 1480366, Comment: 5
+
+Fixes notice warning with mini panels when clearing the Drupal cache.
+
+***Patch File: [panels-mini-panels-cache-1480366-5.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/panels/panels-mini-panels-cache-1480366-5.patch)***
+
 #### Panels Accordion - Issue: 1965770, Comment: 0
 
 This patch alters the [Panels Accordion](http://drupal.org/project/panels_accordion) module to improve the content editor administration of panels accordions so that an entire region can easily be rendered as an accordion.
