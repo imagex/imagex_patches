@@ -1,0 +1,29 @@
+diff --git a/ckeditor.module b/ckeditor.module
+index 809b201..6ba74af 100644
+--- a/ckeditor.module
++++ b/ckeditor.module
+@@ -257,6 +257,24 @@ function ckeditor_element_info_alter(&$types) {
+ }
+ 
+ /**
++ * Implements hook_form_FORM_ID_alter() for media_admin_config_browser()
++ * https://drupal.org/comment/8141819#comment-8141819.
++ */
++function ckeditor_form_media_admin_config_browser_alter(&$form, &$form_state) {
++  $form['wysiwyg']['#access'] = TRUE;
++}
++
++/**
++ * Implements hook_media_browser_params_alter()
++ * https://drupal.org/comment/8141819#comment-8141819
++ */
++function ckeditor_media_browser_params_alter(&$stored_params) {
++  $stored_params['enabledPlugins'] = variable_get('media__wysiwyg_browser_plugins', array());
++  $stored_params['file_directory'] = variable_get('media__wysiwyg_upload_directory', '');
++  $stored_params['types'] = variable_get('media__wysiwyg_allowed_types', array('audio', 'image', 'video', 'document'));
++}
++
++/**
+  * This function creates the HTML objects required for CKEditor.
+  *
+  * @param $element

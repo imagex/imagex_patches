@@ -46,13 +46,23 @@ Applies to 3.x branch.
 
 ***Patch File: [answers_base-hook-fix.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/answers/answers_base-hook-fix.patch)***
 
-#### Ckeditor - Issue: 1504696, Comment: 85
+#### Ckeditor - Issue: 2159403, Comment: 6
 
-This is a follow up patch to the one Kevin created to add media 2.x support to ckeditor.
+This patch alters the [Ckeditor](http://drupal.org/project/ckeditor) module to allow for media 2.x-dev support. Media refactored ckeditor wysiwyg support into media_wysiwyg submodule.
 
-***Patch File: [ckeditor_1504696_85.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/ckeditor/ckeditor_1504696_85.patch)***
+Applies to 1.x dev branch from commit 57245a9.
 
-#### Ckeditor - Issue: 2043365, Comment: 6
+***Patch File: [ckeditor-accomodate-latest-media-changes-2159403-6.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/ckeditor/ckeditor-accomodate-latest-media-changes-2159403-6.patch)***
+
+#### Ckeditor - Issue: [1649464](http://drupal.org/node/1649464), Comment: 6
+
+This patch alters the [Ckeditor](http://drupal.org/project/ckeditor) module to integrate settings for the media browser configurations.
+
+Applies to 1.x dev branch from commit 57245a9.
+
+***Patch File: [ckeditor-hook_into_media_admin-1649464-8141819_0.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/ckeditor/ckeditor-hook_into_media_admin-1649464-8141819_0.patch)***
+
+#### Ckeditor - Issue: [2043365](http://drupal.org/node/2043365), Comment: 6
 
 This patch fixes a problem where text formats assigned by ckeditor profiles in Features wouldn't be respected when they should be empty.
 
@@ -150,6 +160,22 @@ This patch enables the Libraries API module to take into consideration multiple 
 This patch resolves the PHP Warning errors that are presented when the `media_file_default_displays_alter()` function is invoked when comparing an export to the database.
 
 ***Patch File: [media-warnings-creating-default-object-from-emtpy-value-2071073-1.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media/media-warnings-creating-default-object-from-emtpy-value-2071073-1.patch)***
+
+#### Media - Issue: [2126755](http://drupal.org/node/2126755), Comment: 58
+
+This patch alters the [Media](http://drupal.org/project/media) module to improve macro handling for media elements so that they can more accurately be tokenized and untokenized when the editor binds and unbinds. This is more relevant for ckeditor module now because of refactoring that occurred to more tightly integrate media handling for ckeditor module with that done for wysiwyg module located in media_wysiwyg submodule.
+
+Applies to 2.x dev branch from commit 2f828ea761103c49197a50aaeac9b98a350a559b.
+
+***Patch File: [media-wysiwyg-improve-our-macro-handling-2126755-58.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media/media-wysiwyg-improve-our-macro-handling-2126755-58.patch)***
+
+#### Media - Issue: [2177893](http://drupal.org/node/2177893), Comment: 2
+
+This patch alters the [Media](http://drupal.org/project/media) module to remove the mediawrapper custom wrapper for versions of ckeditor library >= 4.0 that don't have the widgets plugin included in the library (you have to manually build the library to include widgets plugin). The handling of this custom wrapper was breaking tokens in certain instances.
+
+Applies to 2.x dev branch from commit 2f828ea761103c49197a50aaeac9b98a350a559b.
+
+***Patch File: [media-ckeditor-remove-mediawrapper-2177893-2.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media/media-ckeditor-remove-mediawrapper-2177893-2.patch)***
 
 #### Media Crop - Issue: 2075161, Comment: 2
 
