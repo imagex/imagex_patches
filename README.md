@@ -46,7 +46,7 @@ Applies to 3.x branch.
 
 ***Patch File: [answers_base-hook-fix.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/answers/answers_base-hook-fix.patch)***
 
-#### Ckeditor - Issue: 2159403, Comment: 6
+#### Ckeditor - Issue: [2159403](http://drupal.org/node/2159403), Comment: 6
 
 This patch alters the [Ckeditor](http://drupal.org/project/ckeditor) module to allow for media 2.x-dev support. Media refactored ckeditor wysiwyg support into media_wysiwyg submodule.
 
@@ -54,13 +54,13 @@ Applies to 1.x dev branch from commit 57245a9.
 
 ***Patch File: [ckeditor-accomodate-latest-media-changes-2159403-6.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/ckeditor/ckeditor-accomodate-latest-media-changes-2159403-6.patch)***
 
-#### Ckeditor - Issue: [1649464](http://drupal.org/node/1649464), Comment: 6
+#### Ckeditor - Issue: [1649464](http://drupal.org/node/1649464), Comment: 9
 
 This patch alters the [Ckeditor](http://drupal.org/project/ckeditor) module to integrate settings for the media browser configurations.
 
 Applies to 1.x dev branch from commit 57245a9.
 
-***Patch File: [ckeditor-hook_into_media_admin-1649464-8141819_0.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/ckeditor/ckeditor-hook_into_media_admin-1649464-8141819_0.patch)***
+***Patch File: [ckeditor-hook_into_media_admin-1649464-9.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/ckeditor/ckeditor-hook_into_media_admin-1649464-9.patch)***
 
 #### Ckeditor - Issue: [2043365](http://drupal.org/node/2043365), Comment: 6
 
