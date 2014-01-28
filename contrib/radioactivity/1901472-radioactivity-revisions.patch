@@ -1,0 +1,69 @@
+diff --git a/radioactivity.module b/radioactivity.module
+index fce57c1..d28caab 100644
+--- a/radioactivity.module
++++ b/radioactivity.module
+@@ -219,29 +219,46 @@ function _radioactivity_update_energy(
+   $force = FALSE
+ ) {
+ 
+-  $table_name = "field_data_" . $field_name;
++  if ($entity_type == 'node') {
++    $vid = db_query('SELECT vid FROM {node} n WHERE n.nid=:nid', array(':nid' => $entity_id))->fetchField();
++  }
++
++  $tables = array(
++    "field_data_" . $field_name,
++  );
++
++  if ($vid) {
++    $tables[] = "field_revision_" . $field_name;
++  }
++  else {
++    $vid = $entity_id;
++  }
++
++  $revision_table_name = "field_revision_" . $field_name;
+ 
+   $energy_column_name = $field_name . '_' . RADIOACTIVITY_FIELD_ENERGY;
+   $timestamp_column_name = $field_name . '_' . RADIOACTIVITY_FIELD_TIMESTAMP;
+ 
+-  $q = db_merge($table_name)->key(array(
+-      'entity_type' => $entity_type,
+-      'bundle' => $bundle,
+-      'entity_id' => $entity_id,
+-      'language' => $language,
+-      'delta' => 0,
+-    ))->fields(array(
+-      'revision_id' => $entity_id,
+-      $timestamp_column_name => $time,
+-      $energy_column_name => $energy_delta,
+-    ));
+-
+-  if (!$force) {
+-    // update instead of set the energy
+-    $q->expression($energy_column_name, $energy_column_name . ' + :inc', array(':inc' => $energy_delta));
+-  }
++  foreach ($tables as $table_name) {
++    $q = db_merge($table_name)->key(array(
++        'entity_type' => $entity_type,
++        'bundle' => $bundle,
++        'entity_id' => $entity_id,
++        'language' => $language,
++        'delta' => 0,
++      ))->fields(array(
++        'revision_id' => $vid,
++        $timestamp_column_name => $time,
++        $energy_column_name => $energy_delta,
++      ));
++
++    if (!$force) {
++      // update instead of set the energy
++      $q->expression($energy_column_name, $energy_column_name . ' + :inc', array(':inc' => $energy_delta));
++    }
+ 
+-  $q->execute();
++    $q->execute();
++  }
+ }
+ 
+ /**
