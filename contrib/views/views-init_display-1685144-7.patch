@@ -1,0 +1,15 @@
+diff --git a/plugins/views_plugin_localization.inc b/plugins/views_plugin_localization.inc
+index 08caf9e..08575c1 100644
+--- a/plugins/views_plugin_localization.inc
++++ b/plugins/views_plugin_localization.inc
+@@ -136,6 +136,10 @@ class views_plugin_localization extends views_plugin {
+   }
+ 
+   function process_locale_strings($op) {
++    if (!isset($this->view) || !($this->view instanceof View) || empty($this->view->localization_plugin)) {
++      return FALSE;
++    }
++
+     $this->view->init_display();
+ 
+     foreach ($this->view->display as $display_id => $display) {
