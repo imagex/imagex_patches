@@ -218,7 +218,7 @@ choice" to permissions, as opposed to anyone having access that can edit the nod
 
 #### Mini Panels In-Place Editor (panels_mini_ipe) - Issue 1966204
 
-This patch only tetermine if an object is set using isset().
+This patch only determines if an object is set using isset().
 
 ***Patch File: [panels_mini_ipe-new_custom_content.patch](https://raw2.github.com/imagex/imagex_patches/7.x/contrib/panels_mini_ipe/panels_mini_ipe-new_custom_content.patch)***
 
