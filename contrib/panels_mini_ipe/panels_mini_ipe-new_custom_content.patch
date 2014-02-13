@@ -1,0 +1,16 @@
+diff --git a/panels_mini_ipe.module b/panels_mini_ipe.module
+index 00df0d5..89d865a 100755
+--- a/panels_mini_ipe.module
++++ b/panels_mini_ipe.module
+@@ -25,8 +25,8 @@ function panels_mini_ipe_menu() {
+  * Implements hook_panels_pane_content_alter().
+  */
+ function panels_mini_ipe_panels_pane_content_alter($content, $pane, $args, $context) {
+-  // only display the link to people with adequate permissions, obviously
+-  if (user_access('change layouts in place editing') && $content->module == 'panels_mini') {
++  // Only display the link to people with adequate permissions, obviously.
++  if (user_access('change layouts in place editing') && isset($content->module) && $content->module == 'panels_mini') {
+     $delta = $content->delta;
+     $mini_panel = panels_mini_load($delta);
+     $url = 'admin/config/mini-panels-ipe/'. $delta;
+
