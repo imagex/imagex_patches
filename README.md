@@ -280,6 +280,13 @@ This patch fixes a bug that prevents content from being imported with features_u
 
 ***Patch File: [workbench_moderation.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/workbench_moderation/workbench_moderation.patch)***
 
+#### Userpoints - Errors
+
+This patch fixed errors in menu access callback `userpoints_admin_access_transaction_pending` and `userpoints_access_my_points`.
+
+***Patch File: [userpoints.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/userpoints/userpoints.patch)***
+
+
 ## Patches for Contributed Themes
 
 #### Mothership - Issue: 2033235, Comment: 16

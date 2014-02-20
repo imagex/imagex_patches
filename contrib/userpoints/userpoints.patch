@@ -1,0 +1,38 @@
+diff --git a/userpoints/userpoints.module b/userpoints/userpoints.module
+index 0f22d8f..7a9e49b 100644
+--- a/userpoints/userpoints.module
++++ b/userpoints/userpoints.module
+@@ -358,7 +358,9 @@ function userpoints_menu_local_tasks_alter(&$data, $router_item, $root_path) {
+  * Only pending transactions can be approved or declined.
+  */
+ function userpoints_admin_access_transaction_pending($transaction) {
+-  return $transaction->status == USERPOINTS_TXN_STATUS_PENDING && userpoints_admin_access('moderate');
++  if (!empty($transaction)) {
++    return $transaction->status == USERPOINTS_TXN_STATUS_PENDING && userpoints_admin_access('moderate');
++  }
+ }
+ 
+ /**
+@@ -384,13 +386,18 @@ function userpoints_access_my_points($account = NULL) {
+  *   TRUE if the user has permissions to view the transaction.
+  */
+ function userpoints_access_view_transaction($transaction) {
+-  if (empty($transaction->user)) {
+-    $account = user_load($transaction->uid);
++  if (empty($transaction)) {
++    return TRUE;
+   }
+   else {
+-    $account = $transaction->user;
++    if (empty($transaction->user)) {
++      $account = user_load($transaction->uid);
++    }
++    else {
++      $account = $transaction->user;
++    }
++    return userpoints_access_my_points($account);
+   }
+-  return userpoints_access_my_points($account);
+ }
+ 
+ /**
