@@ -1,0 +1,17 @@
+diff --git a/workbench_moderation.module b/workbench_moderation.module
+index 4cfc51a..701a546 100644
+--- a/workbench_moderation.module
++++ b/workbench_moderation.module
+@@ -691,6 +691,12 @@ function workbench_moderation_node_update($node) {
+     );
+   }
+ 
++  // Normalize the `workbench_moderation` element to ensure that
++  // each revision type is of type object.
++  foreach ($node->workbench_moderation as $revision_type => $info) {
++    $node->workbench_moderation[$revision_type] = (object) $node->workbench_moderation[$revision_type];
++  }
++
+   // Apply moderation changes if this is a new revision or if the moderation
+   // state has changed.
+   if (!empty($node->revision) || $node->workbench_moderation_state_current != $node->workbench_moderation_state_new) {
