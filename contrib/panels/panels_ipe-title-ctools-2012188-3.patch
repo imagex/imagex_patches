@@ -1,0 +1,13 @@
+diff --git a/panels/panels_ipe/plugins/display_renderers/panels_renderer_ipe.class.php b/panels/panels_ipe/plugins/display_renderers/panels_renderer_ipe.class.php
+index 0954558..36878f3 100644
+--- a/panels/panels_ipe/plugins/display_renderers/panels_renderer_ipe.class.php
++++ b/panels/panels_ipe/plugins/display_renderers/panels_renderer_ipe.class.php
+@@ -141,7 +141,7 @@ class panels_renderer_ipe extends panels_renderer_editor {
+       $content = new stdClass();
+       // Get the administrative title.
+       $content_type = ctools_get_content_type($pane->type);
+-      $title = ctools_content_admin_title($content_type, $pane->subtype, $pane->configuration, $this->display->context);
++      $title = ctools_content_get_subtype($content_type, $pane->subtype) ? ctools_content_admin_title($content_type, $pane->subtype, $pane->configuration, $this->display->context) : t('Unknown');
+ 
+       $content->content = t('Placeholder for empty "@title"', array('@title' => $title));
+       // Add these to prevent notices.
