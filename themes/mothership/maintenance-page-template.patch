@@ -1,0 +1,15 @@
+diff --git a/mothership/templates/maintenance-page.tpl.php b/mothership/templates/maintenance-page.tpl.php
+index 3371c75..a7324f6 100644
+--- a/mothership/templates/maintenance-page.tpl.php
++++ b/mothership/templates/maintenance-page.tpl.php
+@@ -9,7 +9,9 @@
+ <?php if(theme_get_setting('mothership_html5')){  ?>
+ <head>
+ <?php }else{ ?>
+-  <head profile="<?php print $grddl_profile; ?>">
++  <?php if (isset($grddl_profile)):?>
++    <head profile="<?php print $grddl_profile; ?>">
++  <?php endif;?>
+ <?php } ?>
+   <title><?php print $head_title; ?></title>
+   <?php print $head; ?>
