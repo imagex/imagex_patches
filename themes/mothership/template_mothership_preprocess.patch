@@ -1,0 +1,13 @@
+diff --git a/mothership/template.php b/mothership/template.php
+index 22a2687..9bfed91 100644
+--- a/mothership/template.php
++++ b/mothership/template.php
+@@ -518,7 +518,7 @@ function mothership_preprocess(&$vars, $hook) {
+ 
+     $vars['path'] = $path;
+     $vars['appletouchicon'] = $appletouchicon;
+-    $vars['selectivizr'] = $selectivizr;
++    $vars['selectivizr'] = (isset($selectivizr)) ? $selectivizr : NULL;
+     $vars['theme_hook_suggestions'][] = 'static__maintenance';
+ 
+   }
