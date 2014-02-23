@@ -1,7 +1,7 @@
-diff --git a/userpoints/userpoints.module b/userpoints/userpoints.module
+diff --git a/userpoints.module b/userpoints.module
 index 0f22d8f..7a9e49b 100644
---- a/userpoints/userpoints.module
-+++ b/userpoints/userpoints.module
+--- a/userpoints.module
++++ b/userpoints.module
 @@ -358,7 +358,9 @@ function userpoints_menu_local_tasks_alter(&$data, $router_item, $root_path) {
   * Only pending transactions can be approved or declined.
   */
