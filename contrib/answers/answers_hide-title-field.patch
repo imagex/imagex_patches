@@ -1,0 +1,35 @@
+From afb77262f7af996870e740725e062902a836799e Mon Sep 17 00:00:00 2001
+From: Mark Labrecque <mark.labrecque@gmail.com>
+Date: Thu, 27 Feb 2014 12:03:42 -0800
+Subject: [PATCH] Provided a default value and hid the title field for the
+ Answers content type.
+
+---
+ imagex_answers.module | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/imagex_answers.module b/imagex_answers.module
+index b62a463..09a9eab 100644
+--- a/imagex_answers.module
++++ b/imagex_answers.module
+@@ -65,6 +65,17 @@ function imagex_answers_node_view($node, $view_mode, $langcode) {
+ }
+ 
+ /**
++ * Implements hook_form_alter().
++*/
++
++function imagex_answers_form_alter(&$form, &$form_state, $form_id) {
++  if($form_id == 'answer_node_form') {
++    $form['title']['#type'] = 'hidden';
++    $form['title']['#default_value'] = "re: " . $form['field_answer_question']['en'][0]['nid']['#title'];
++  }
++}
++
++/**
+  * This function updates the node with answer nid
+  */
+ function imagex_answer_select_answer($js, $node, $answer_nid) {
+-- 
+1.8.3.4 (Apple Git-47)
+
