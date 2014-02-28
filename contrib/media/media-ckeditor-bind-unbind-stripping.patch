@@ -1,0 +1,105 @@
+diff --git a/modules/media_wysiwyg/wysiwyg_plugins/media_ckeditor/plugin.js b/modules/media_wysiwyg/wysiwyg_plugins/media_ckeditor/plugin.js
+index 9cecb71..b3eb2bd 100644
+--- a/modules/media_wysiwyg/wysiwyg_plugins/media_ckeditor/plugin.js
++++ b/modules/media_wysiwyg/wysiwyg_plugins/media_ckeditor/plugin.js
+@@ -99,13 +99,19 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
+           replacement = '<!--MEDIA-WRAPPER-START-$1-->$2<!--MEDIA-WRAPPER-END-$1-->';
+         }
+         data = data.replace(/<mediawrapper data="(.*)">(.*?)<\/mediawrapper>/gi, replacement);
+-        data = Drupal.media.filter.replacePlaceholderWithToken(data);
++
++        var matches = data.match(/\[\[.*?"type":"media".*?\]\]/g);
++
++        if (!matches) {
++          data = Drupal.media.filter.replacePlaceholderWithToken(data);
++        }
+         return data;
+       }
+ 
+       // Ensure the tokens are replaced by placeholders while editing.
+       // Check for widget support.
+       if (mediaPluginDefinition.hasWidgetSupport) {
++
+         editor.widgets.add( 'mediabox',
+         {
+           button: 'Create a mediabox',
+@@ -126,39 +132,43 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
+             return element.name == 'mediawrapper';
+           }
+         });
+-      }
+-      else if (ckeditorversion >= 4) {
+-        // CKEditor >=4.0
+-        editor.on('setData', function( event ) {
+-          event.data.dataValue = prepareDataForWysiwygMode(event.data.dataValue);
+-        });
++
+       }
+       else {
+-        // CKEditor >=3.6 behaviour.
+-        editor.on( 'beforeSetMode', function( event, data ) {
+-          event.removeListener();
+-          var wysiwyg = editor._.modes[ 'wysiwyg' ];
+-          var source = editor._.modes[ 'source' ];
+-          wysiwyg.loadData = CKEDITOR.tools.override( wysiwyg.loadData, function( org )
+-          {
+-            return function( data ) {
+-              return ( org.call( this, prepareDataForWysiwygMode(data)) );
+-            };
+-          } );
+-          source.loadData = CKEDITOR.tools.override( source.loadData, function( org )
+-          {
+-            return function( data ) {
+-              return ( org.call( this, prepareDataForSourceMode(data) ) );
+-            };
+-          } );
+-        });
+-      }
+ 
+-      // Provide alternative to the widget functionality introduced in 4.3.
+-      if (!mediaPluginDefinition.hasWidgetSupport) {
++        if (ckeditorversion >= 4) {
++          // CKEditor >=4.0
++          editor.on('setData', function( event ) {
++            event.data.dataValue = prepareDataForWysiwygMode(event.data.dataValue);
++          });
++        }
++        else {
++          // CKEditor >=3.6 behaviour.
++          editor.on( 'beforeSetMode', function( event, data ) {
++            event.removeListener();
++            var wysiwyg = editor._.modes[ 'wysiwyg' ];
++            var source = editor._.modes[ 'source' ];
++            wysiwyg.loadData = CKEDITOR.tools.override( wysiwyg.loadData, function( org )
++            {
++              return function( data ) {
++                return ( org.call( this, prepareDataForWysiwygMode(data)) );
++              };
++            } );
++            source.loadData = CKEDITOR.tools.override( source.loadData, function( org )
++            {
++              return function( data ) {
++                return ( org.call( this, prepareDataForSourceMode(data) ) );
++              };
++            } );
++          });
++        }
++
++        // Provide alternative to the widget functionality introduced in 4.3.
+         // Ensure tokens instead the html element is saved.
+         editor.on('getData', function( event ) {
+-          event.data.dataValue = prepareDataForSourceMode(event.data.dataValue);
++          if (event.data.dataValue) {
++            event.data.dataValue = prepareDataForSourceMode(event.data.dataValue);
++          }
+         });
+ 
+         // Ensure our enclosing wrappers are always included in the selection.
+@@ -209,6 +219,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
+             editor.getSelection().selectRanges(newRanges);
+           }
+         });
++
+       }
+     }
+   };

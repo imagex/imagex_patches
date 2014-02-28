@@ -177,6 +177,14 @@ Applies to 2.x dev branch from commit 2f828ea761103c49197a50aaeac9b98a350a559b.
 
 ***Patch File: [media-ckeditor-remove-mediawrapper-2177893-2.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media/media-ckeditor-remove-mediawrapper-2177893-2.patch)***
 
+#### Media - Fixes embedded documents on bind/unbind
+
+This patch alters the [Media](http://drupal.org/project/media) module to fix an issue whereby when embedded documents such as pdf, doc, etc. are placed in the wysiwyg they would get stripped out when the editor binds and unbinds by clicking the "Source" button or selecting the link to go into plain text mode.
+
+Applies to 2.x dev branch from commit 2f828ea761103c49197a50aaeac9b98a350a559b. This patch must be applied on top of [media-ckeditor-remove-mediawrapper-2177893-2.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media/media-ckeditor-remove-mediawrapper-2177893-2.patch) above.
+
+***Patch File: [media-ckeditor-bind-unbind-stripping.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media/media-ckeditor-bind-unbind-stripping.patch)***
+
 #### Media Crop - Issue: 2075161, Comment: 2
 
 Small patch removing dependence on the wysiwyg module, since we're using ckeditor instead.
