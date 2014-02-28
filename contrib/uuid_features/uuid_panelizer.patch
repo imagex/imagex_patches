@@ -1,12 +1,11 @@
 diff --git a/uuid_features.module b/uuid_features.module
-index c42f4ef..236a88f 100644
+index a96efd7..cf412c1 100644
 --- a/uuid_features.module
 +++ b/uuid_features.module
-@@ -493,3 +493,72 @@ function _uuid_features_file_field_import_file(&$file) {
+@@ -496,3 +496,75 @@ function _uuid_features_file_field_import_file(&$file) {
  
    return TRUE;
  }
-+
 +
 +/**
 + * Implements hook_entity_presave().
@@ -66,9 +65,13 @@ index c42f4ef..236a88f 100644
 +      $panel = (object) $panel;
 +      $panel->entity_id = $id;
 +      $panel->revision_id = $vid;
-+      $panel->display = (object) $panel->display;
-+      foreach($panel->display->content as &$pane) {
-+        $pane = (object) $pane;
++      
++      // Check panel has panes in display
++      if (!empty($panel->display)) {
++        $panel->display = (object) $panel->display;
++        foreach($panel->display->content as &$pane) {
++          $pane = (object) $pane;
++        }
 +      }
 +      $entity->panelizer[$name] = $panel;
 +    }
