@@ -1,0 +1,68 @@
+diff --git a/modules/media_wysiwyg/wysiwyg_plugins/media_ckeditor/library.js b/modules/media_wysiwyg/wysiwyg_plugins/media_ckeditor/library.js
+index a1f3337..9f24dbc 100644
+--- a/modules/media_wysiwyg/wysiwyg_plugins/media_ckeditor/library.js
++++ b/modules/media_wysiwyg/wysiwyg_plugins/media_ckeditor/library.js
+@@ -8,6 +8,7 @@
+   Drupal.media = Drupal.media || {};
+ 
+   Drupal.settings.ckeditor.plugins['media'] = {
++
+     /**
+      * Execute the button.
+      */
+@@ -49,24 +50,27 @@
+         attributes: formattedMedia.options
+       });
+ 
++      var hasWidgetSupport = typeof(CKEDITOR.plugins.registered.widget) != 'undefined';
++
+       // Use own wrapper element to be able to properly deal with selections.
+       // Check prepareDataForWysiwygMode() in plugin.js for details.
+       var wysiwygHTML = Drupal.media.filter.getWysiwygHTML(element);
+ 
+-      // Insert element. Use CKEDITOR.dom.element.createFromHtml to ensure our
+-      // custom wrapper element is preserved.
+       if (wysiwygHTML.indexOf("<!--MEDIA-WRAPPER-START-") !== -1) {
+         ckeditorInstance.plugins.media.mediaLegacyWrappers = true;
+         wysiwygHTML = wysiwygHTML.replace(/<!--MEDIA-WRAPPER-START-(\d+)-->(.*?)<!--MEDIA-WRAPPER-END-\d+-->/gi, '');
+-      } else {
++      }
++      else if (hasWidgetSupport) {
+         wysiwygHTML = '<mediawrapper data="">' + wysiwygHTML + '</mediawrapper>';
+       }
+ 
++      // Insert element. Use CKEDITOR.dom.element.createFromHtml to ensure our
++      // custom wrapper element is preserved.
+       var editorElement = CKEDITOR.dom.element.createFromHtml(wysiwygHTML);
+       ckeditorInstance.insertElement(editorElement);
+ 
+       // Initialize widget on our html if possible.
+-      if (parseFloat(CKEDITOR.version) >= 4.3 && typeof(CKEDITOR.plugins.registered.widget) != 'undefined') {
++      if (parseFloat(CKEDITOR.version) >= 4.3 && hasWidgetSupport) {
+         ckeditorInstance.widgets.initOn( editorElement, 'mediabox' );
+       }
+     },
+diff --git a/modules/media_wysiwyg/wysiwyg_plugins/media_ckeditor/plugin.js b/modules/media_wysiwyg/wysiwyg_plugins/media_ckeditor/plugin.js
+index d862474..9cecb71 100644
+--- a/modules/media_wysiwyg/wysiwyg_plugins/media_ckeditor/plugin.js
++++ b/modules/media_wysiwyg/wysiwyg_plugins/media_ckeditor/plugin.js
+@@ -19,7 +19,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
+     mediaLegacyWrappers: false,
+ 
+     // Wrap Drupal plugin in a proxy plugin.
+-    init: function(editor){
++    init: function(editor) {
+       editor.addCommand( 'media',
+       {
+         exec: function (editor) {
+@@ -87,7 +87,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
+         data = Drupal.media.filter.replaceTokenWithPlaceholder(data);
+         // Legacy media wrapper.
+         mediaPluginDefinition.mediaLegacyWrappers = (data.indexOf("<!--MEDIA-WRAPPER-START-") !== -1);
+-        data = data.replace(/<!--MEDIA-WRAPPER-START-(\d+)-->(.*?)<!--MEDIA-WRAPPER-END-\d+-->/gi, '<mediawrapper data="$1">$2</mediawrapper>');
++        if (mediaPluginDefinition.mediaLegacyWrappers) {
++          data = data.replace(/<!--MEDIA-WRAPPER-START-(\d+)-->(.*?)<!--MEDIA-WRAPPER-END-\d+-->/gi, '<mediawrapper data="$1">$2</mediawrapper>');
++        }
+         return data;
+       }
+       function prepareDataForSourceMode(data) {

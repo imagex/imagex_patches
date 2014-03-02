@@ -161,27 +161,27 @@ This patch resolves the PHP Warning errors that are presented when the `media_fi
 
 ***Patch File: [media-warnings-creating-default-object-from-emtpy-value-2071073-1.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media/media-warnings-creating-default-object-from-emtpy-value-2071073-1.patch)***
 
-#### Media - Issue: [2126755](http://drupal.org/node/2126755), Comment: 58
+#### Media - Issue: [2126755](http://drupal.org/node/2126755), Comment: 78
 
 This patch alters the [Media](http://drupal.org/project/media) module to improve macro handling for media elements so that they can more accurately be tokenized and untokenized when the editor binds and unbinds. This is more relevant for ckeditor module now because of refactoring that occurred to more tightly integrate media handling for ckeditor module with that done for wysiwyg module located in media_wysiwyg submodule.
 
 Applies to 2.x dev branch from commit 2f828ea761103c49197a50aaeac9b98a350a559b.
 
-***Patch File: [media-wysiwyg-improve-our-macro-handling-2126755-58.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media/media-wysiwyg-improve-our-macro-handling-2126755-58.patch)***
+***Patch File: [media-wysiwyg-improve-our-macro-handling-2126755-78.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media/media-wysiwyg-improve-our-macro-handling-2126755-78.patch)***
 
-#### Media - Issue: [2177893](http://drupal.org/node/2177893), Comment: 2
+#### Media - Issue: [2177893](http://drupal.org/node/2177893), Comment: 4
 
 This patch alters the [Media](http://drupal.org/project/media) module to remove the mediawrapper custom wrapper for versions of ckeditor library >= 4.0 that don't have the widgets plugin included in the library (you have to manually build the library to include widgets plugin). The handling of this custom wrapper was breaking tokens in certain instances.
 
 Applies to 2.x dev branch from commit 2f828ea761103c49197a50aaeac9b98a350a559b.
 
-***Patch File: [media-ckeditor-remove-mediawrapper-2177893-2.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media/media-ckeditor-remove-mediawrapper-2177893-2.patch)***
+***Patch File: [media-ckeditor-remove-mediawrapper-2177893-4.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media/media-ckeditor-remove-mediawrapper-2177893-4.patch)***
 
 #### Media - Fixes embedded documents on bind/unbind
 
 This patch alters the [Media](http://drupal.org/project/media) module to fix an issue whereby when embedded documents such as pdf, doc, etc. are placed in the wysiwyg they would get stripped out when the editor binds and unbinds by clicking the "Source" button or selecting the link to go into plain text mode.
 
-Applies to 2.x dev branch from commit 2f828ea761103c49197a50aaeac9b98a350a559b. This patch must be applied on top of [media-ckeditor-remove-mediawrapper-2177893-2.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media/media-ckeditor-remove-mediawrapper-2177893-2.patch) above.
+Applies to 2.x dev branch from commit 2f828ea761103c49197a50aaeac9b98a350a559b. This patch must be applied on top of [media-ckeditor-remove-mediawrapper-2177893-2.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media/media-ckeditor-remove-mediawrapper-2177893-2.patch) and [media-ckeditor-remove-mediawrapper-2177893-4.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media/media-ckeditor-remove-mediawrapper-2177893-4.patch).
 
 ***Patch File: [media-ckeditor-bind-unbind-stripping.patch](https://raw.github.com/imagex/imagex_patches/7.x/contrib/media/media-ckeditor-bind-unbind-stripping.patch)***
 

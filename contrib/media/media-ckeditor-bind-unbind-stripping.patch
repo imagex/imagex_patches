@@ -1,18 +1,186 @@
+diff --git a/modules/media_wysiwyg/js/media_wysiwyg.filter.js b/modules/media_wysiwyg/js/media_wysiwyg.filter.js
+index 002805e..9df0645 100644
+--- a/modules/media_wysiwyg/js/media_wysiwyg.filter.js
++++ b/modules/media_wysiwyg/js/media_wysiwyg.filter.js
+@@ -66,14 +66,13 @@
+     replacePlaceholderWithToken: function(content) {
+       Drupal.media.filter.ensure_tagmap();
+ 
+-      // Rewrite the tagmap in case any of the macros have changed.
+-      Drupal.settings.tagmap = {};
+-
+       // Wrap the content to be able to use replaceWith() and html().
+       content = $('<div>').append(content);
+       var media = $('.media-element', content);
+ 
+       if (media.length) {
++        // Rewrite the tagmap in case any of the macros have changed.
++        Drupal.settings.tagmap = {};
+         // Replace all media elements with their respective macros.
+         media.replaceWith(function() {
+           var el = $(this),
+diff --git a/modules/media_wysiwyg/wysiwyg_plugins/media_ckeditor/library.js b/modules/media_wysiwyg/wysiwyg_plugins/media_ckeditor/library.js
+index 9f24dbc..f4b7805 100644
+--- a/modules/media_wysiwyg/wysiwyg_plugins/media_ckeditor/library.js
++++ b/modules/media_wysiwyg/wysiwyg_plugins/media_ckeditor/library.js
+@@ -54,134 +54,32 @@
+ 
+       // Use own wrapper element to be able to properly deal with selections.
+       // Check prepareDataForWysiwygMode() in plugin.js for details.
+-      var wysiwygHTML = Drupal.media.filter.getWysiwygHTML(element);
++      var markup = Drupal.media.filter.getWysiwygHTML(element);
+ 
+-      if (wysiwygHTML.indexOf("<!--MEDIA-WRAPPER-START-") !== -1) {
++      if (markup.indexOf("<!--MEDIA-WRAPPER-START-") !== -1) {
+         ckeditorInstance.plugins.media.mediaLegacyWrappers = true;
+-        wysiwygHTML = wysiwygHTML.replace(/<!--MEDIA-WRAPPER-START-(\d+)-->(.*?)<!--MEDIA-WRAPPER-END-\d+-->/gi, '');
++        markup = markup.replace(/<!--MEDIA-WRAPPER-START-(\d+)-->(.*?)<!--MEDIA-WRAPPER-END-\d+-->/gi, '');
+       }
+       else if (hasWidgetSupport) {
+-        wysiwygHTML = '<mediawrapper data="">' + wysiwygHTML + '</mediawrapper>';
++        markup = '<mediawrapper data="">' + markup + '</mediawrapper>';
+       }
+ 
+-      // Insert element. Use CKEDITOR.dom.element.createFromHtml to ensure our
+-      // custom wrapper element is preserved.
+-      var editorElement = CKEDITOR.dom.element.createFromHtml(wysiwygHTML);
+-      ckeditorInstance.insertElement(editorElement);
++      if (hasWidgetSupport) {
++        // Insert element. Use CKEDITOR.dom.element.createFromHtml to ensure our
++        // custom wrapper element is preserved.
++        var editorElement = CKEDITOR.dom.element.createFromHtml(markup);
++        ckeditorInstance.insertElement(editorElement);
++      }
++      else {
++        ckeditorInstance.insertHtml(markup);
++      }
+ 
+       // Initialize widget on our html if possible.
+       if (parseFloat(CKEDITOR.version) >= 4.3 && hasWidgetSupport) {
+         ckeditorInstance.widgets.initOn( editorElement, 'mediabox' );
+       }
+-    },
+-
+-    /**
+-     * Forces custom attributes into the class field of the specified image.
+-     *
+-     * Due to a bug in some versions of Firefox
+-     * (http://forums.mozillazine.org/viewtopic.php?f=9&t=1991855), the
+-     * custom attributes used to share information about the image are
+-     * being stripped as the image markup is set into the rich text
+-     * editor.  Here we encode these attributes into the class field so
+-     * the data survives.
+-     *
+-     * @param imgElement
+-     *   The image
+-     * @fid
+-     *   The file id.
+-     * @param view_mode
+-     *   The view mode.
+-     * @param additional
+-     *   Additional attributes to add to the image.
+-     */
+-    forceAttributesIntoClass: function (imgElement, fid, view_mode, additional) {
+-      var wysiwyg = imgElement.attr('wysiwyg');
+-      if (wysiwyg) {
+-        imgElement.addClass('attr__wysiwyg__' + wysiwyg);
+-      }
+-      var format = imgElement.attr('format');
+-      if (format) {
+-        imgElement.addClass('attr__format__' + format);
+-      }
+-      var typeOf = imgElement.attr('typeof');
+-      if (typeOf) {
+-        imgElement.addClass('attr__typeof__' + typeOf);
+-      }
+-      if (fid) {
+-        imgElement.addClass('img__fid__' + fid);
+-      }
+-      if (view_mode) {
+-        imgElement.addClass('img__view_mode__' + view_mode);
+-      }
+-      if (additional) {
+-        for (var name in additional) {
+-          if (additional.hasOwnProperty(name)) {
+-            switch (name) {
+-              case 'field_file_image_alt_text[und][0][value]':
+-                imgElement.attr('alt', additional[name]);
+-                break;
+-              case 'field_file_image_title_text[und][0][value]':
+-                imgElement.attr('title', additional[name]);
+-                break;
+-              default:
+-                imgElement.addClass('attr__' + name + '__' + additional[name]);
+-                break;
+-            }
+-          }
+-        }
+-      }
+-    },
+-
+-    /**
+-     * Retrieves encoded attributes from the specified class string.
+-     *
+-     * @param classString
+-     *   A string containing the value of the class attribute.
+-     * @return
+-     *   An array containing the attribute names as keys, and an object
+-     *   with the name, value, and attribute type (either 'attr' or
+-     *   'img', depending on whether it is an image attribute or should
+-     *   be it the attributes section)
+-     */
+-    getAttributesFromClass: function (classString) {
+-      var actualClasses = [];
+-      var otherAttributes = [];
+-      var classes = classString.split(' ');
+-      var regexp = new RegExp('^(attr|img)__([^\S]*)__([^\S]*)$');
+-      for (var index = 0; index < classes.length; index++) {
+-        var matches = classes[index].match(regexp);
+-        if (matches && matches.length === 4) {
+-          otherAttributes[matches[2]] = {
+-            name: matches[2],
+-            value: matches[3],
+-            type: matches[1]
+-          };
+-        }
+-        else {
+-          actualClasses.push(classes[index]);
+-        }
+-      }
+-      if (actualClasses.length > 0) {
+-        otherAttributes['class'] = {
+-          name: 'class',
+-          value: actualClasses.join(' '),
+-          type: 'attr'
+-        };
+-      }
+-      return otherAttributes;
+-    },
+-
+-    sortAttributes: function (a, b) {
+-      var nameA = a.name.toLowerCase();
+-      var nameB = b.name.toLowerCase();
+-      if (nameA < nameB) {
+-        return -1;
+-      }
+-      if (nameA > nameB) {
+-        return 1;
+-      }
+-      return 0;
+     }
++
+   };
+ 
+ })(jQuery);
 diff --git a/modules/media_wysiwyg/wysiwyg_plugins/media_ckeditor/plugin.js b/modules/media_wysiwyg/wysiwyg_plugins/media_ckeditor/plugin.js
-index 9cecb71..b3eb2bd 100644
+index 9cecb71..63bb956 100644
 --- a/modules/media_wysiwyg/wysiwyg_plugins/media_ckeditor/plugin.js
 +++ b/modules/media_wysiwyg/wysiwyg_plugins/media_ckeditor/plugin.js
-@@ -99,13 +99,19 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
-           replacement = '<!--MEDIA-WRAPPER-START-$1-->$2<!--MEDIA-WRAPPER-END-$1-->';
+@@ -100,12 +100,14 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
          }
          data = data.replace(/<mediawrapper data="(.*)">(.*?)<\/mediawrapper>/gi, replacement);
--        data = Drupal.media.filter.replacePlaceholderWithToken(data);
+         data = Drupal.media.filter.replacePlaceholderWithToken(data);
 +
-+        var matches = data.match(/\[\[.*?"type":"media".*?\]\]/g);
-+
-+        if (!matches) {
-+          data = Drupal.media.filter.replacePlaceholderWithToken(data);
-+        }
          return data;
        }
  
@@ -23,7 +191,7 @@ index 9cecb71..b3eb2bd 100644
          editor.widgets.add( 'mediabox',
          {
            button: 'Create a mediabox',
-@@ -126,39 +132,43 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
+@@ -126,39 +128,43 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
              return element.name == 'mediawrapper';
            }
          });
@@ -95,7 +263,7 @@ index 9cecb71..b3eb2bd 100644
          });
  
          // Ensure our enclosing wrappers are always included in the selection.
-@@ -209,6 +219,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
+@@ -209,6 +215,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
              editor.getSelection().selectRanges(newRanges);
            }
          });
