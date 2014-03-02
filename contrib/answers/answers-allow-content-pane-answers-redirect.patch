@@ -1,10 +1,10 @@
 diff --git a/answers.module b/answers.module
-index 57feecb..8cfbac2 100644
+index 6670ebe..1baf352 100644
 --- a/answers.module
 +++ b/answers.module
-@@ -105,7 +105,7 @@ function answers_node_view($node, $view_mode, $langcode) {
+@@ -104,7 +104,7 @@ function answers_node_view($node, $view_mode, $langcode) {
+   }
    elseif (($node->type == 'answer') &&
- 
            variable_get('answers_redirect_from_answer_to_question_nodes_p', TRUE) &&
 -          ($view_mode == 'full') &&
 +          (($view_mode == 'full') || ($view_mode == 'page_manager')) &&
