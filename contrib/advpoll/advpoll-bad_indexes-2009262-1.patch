@@ -1,0 +1,32 @@
+diff --git a/advpoll.install b/advpoll.install
+index ff39390..4d8da68 100644
+--- a/advpoll.install
++++ b/advpoll.install
+@@ -159,11 +159,7 @@ function _advpoll_installed_fields() {
+       'entity_types' => array(),
+       'field_name' => 'advpoll_choice',
+       'foreign keys' => array(),
+-      'indexes' => array(
+-        'choice' => array(
+-          0 => 'choice',
+-        ),
+-      ),
++      'indexes' => array(),
+       'module' => 'advpoll_field',
+       'settings' => array(),
+       'translatable' => '0',
+diff --git a/advpoll_field/advpoll_field.install b/advpoll_field/advpoll_field.install
+index fbd8f16..648b607 100644
+--- a/advpoll_field/advpoll_field.install
++++ b/advpoll_field/advpoll_field.install
+@@ -23,9 +23,7 @@ function advpoll_field_field_schema($field) {
+     'choice' => array('type' => 'varchar', 'length' => 500, 'not null' => TRUE),
+     'write_in' => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
+   );
+-  $indexes = array(
+-    'choice' => array('choice'),
+-  );
++  $indexes = array();
+   return array(
+     'columns' => $columns,
+     'indexes' => $indexes,
