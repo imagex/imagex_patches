@@ -1,0 +1,38 @@
+From a1eb518562bffe483d417f98742b163db31c7689 Mon Sep 17 00:00:00 2001
+From: Mark Labrecque <mark.labrecque@gmail.com>
+Date: Wed, 5 Mar 2014 11:22:16 -0800
+Subject: [PATCH] Patching out the field added to all nodes.
+
+---
+ user_badges.module | 15 ---------------
+ 1 file changed, 15 deletions(-)
+
+diff --git a/user_badges.module b/user_badges.module
+index dc754b2..308899b 100644
+--- a/user_badges.module
++++ b/user_badges.module
+@@ -1481,21 +1481,6 @@ function user_badges_block_save($delta = 0, $edit = array()) {
+ }
+ 
+ /**
+- * Implements hook_field_extra_fields().
+- */
+-function user_badges_field_extra_fields_alter(&$info) {
+-  foreach (node_type_get_types() as $node_type) {
+-    if (!isset($info['node'][$node_type->type]['form']['badges'])) {
+-      $info['node'][$node_type->type]['form']['badges'] = array(
+-        'label' => t('User Badges'),
+-        'description' => t('User badges display'),
+-        'weight' => 30,
+-      );
+-    }
+-  }
+-}
+-
+-/**
+  * Implements hook_preprocess_node().
+  */
+ function user_badges_preprocess_node(&$variables, $hook) {
+-- 
+1.8.3.4 (Apple Git-47)
+
