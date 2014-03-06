@@ -1,0 +1,19 @@
+diff --git a/includes/common.inc b/includes/common.inc
+index 3b4bf58..5afab92 100644
+--- a/includes/common.inc
++++ b/includes/common.inc
+@@ -2785,7 +2785,13 @@ function drupal_map_assoc($array, $function = NULL) {
+  */
+ function drupal_set_time_limit($time_limit) {
+   if (function_exists('set_time_limit')) {
+-    @set_time_limit($time_limit);
++    $current_time_limit = @ini_get('max_execution_time');
++    if (FALSE !== $current_time_limit) {
++      $current_time_limit = (int) $current_time_limit;
++      if (0 < $current_time_limit) {
++        @set_time_limit($time_limit);
++      }
++    }
+   }
+ }
+ 
