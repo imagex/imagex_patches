@@ -1,0 +1,195 @@
+diff --git a/features.api.php b/features.api.php
+index 10915e1..24e62d2 100644
+--- a/features.api.php
++++ b/features.api.php
+@@ -379,6 +379,86 @@ function hook_user_default_roles_alter(&$roles) {
+ }
+ 
+ /**
++ * Feature module hook. Invoked on a Feature module before a module is
++ * reverted.
++ *
++ * @param $component
++ *   String name of the component that is about to be reverted.
++ */
++function hook_features_revert_before($items) {
++}
++
++/**
++ * Feature module hook. Invoked on a Feature module after a module is
++ * reverted.
++ *
++ * @param $component
++ *   String name of the component that has just been reverted.
++ */
++function hook_features_revert_after($items) {
++}
++
++/**
++ * Feature module hook. Invoked on a Feature module before a module is
++ * rebuilt.
++ *
++ * @param $component
++ *   String name of the component that is about to be rebuilt.
++ */
++function hook_features_rebuild_before($items) {
++}
++
++/**
++ * Feature module hook. Invoked on a Feature module after a module is
++ * rebuilt.
++ *
++ * @param $component
++ *   String name of the component that has just been rebuilt.
++ */
++function hook_features_rebuild_after($items) {
++}
++
++/**
++ * Feature module hook. Invoked on a Feature module before a module is
++ * disabled.
++ *
++ * @param $component
++ *   String name of the component that is about to be disabled.
++ */
++function hook_features_disable_feature_before($items) {
++}
++
++/**
++ * Feature module hook. Invoked on a Feature module after a module is
++ * disabled.
++ *
++ * @param $component
++ *   String name of the component that has just been disabled.
++ */
++function hook_features_disable_feature_after($items) {
++}
++
++/**
++ * Feature module hook. Invoked on a Feature module before that module is
++ * enabled.
++ *
++ * @param $component
++ *   String name of the component that is about to be enabled.
++ */
++function hook_features_enable_feature_before($items) {
++}
++
++/**
++ * Feature module hook. Invoked on a Feature module after that module is
++ * enabled.
++ *
++ * @param $component
++ *   String name of the component that has just been enabled.
++ */
++function hook_features_enable_feature_after($items) {
++}
++
++/**
+  * @}
+  */
+ 
+@@ -398,7 +478,7 @@ function hook_user_default_roles_alter(&$roles) {
+  * @param $component
+  *   String name of the component that is about to be reverted.
+  */
+-function hook_pre_features_revert($component) {
++function hook_pre_features_revert($component = null) {
+ }
+ 
+ /**
+@@ -408,7 +488,7 @@ function hook_pre_features_revert($component) {
+  * @param $component
+  *   String name of the component that has just been reverted.
+  */
+-function hook_post_features_revert($component) {
++function hook_post_features_revert($component = null) {
+ }
+ 
+ /**
+@@ -418,7 +498,7 @@ function hook_post_features_revert($component) {
+  * @param $component
+  *   String name of the component that is about to be rebuilt.
+  */
+-function hook_pre_features_rebuild($component) {
++function hook_pre_features_rebuild($component = null) {
+ }
+ 
+ /**
+@@ -428,7 +508,7 @@ function hook_pre_features_rebuild($component) {
+  * @param $component
+  *   String name of the component that has just been rebuilt.
+  */
+-function hook_post_features_rebuild($component) {
++function hook_post_features_rebuild($component = null) {
+ }
+ 
+ /**
+@@ -438,7 +518,7 @@ function hook_post_features_rebuild($component) {
+  * @param $component
+  *   String name of the component that is about to be disabled.
+  */
+-function hook_pre_features_disable_feature($component) {
++function hook_pre_features_disable_feature($component = null) {
+ }
+ 
+ /**
+@@ -448,7 +528,7 @@ function hook_pre_features_disable_feature($component) {
+  * @param $component
+  *   String name of the component that has just been disabled.
+  */
+-function hook_post_features_disable_feature($component) {
++function hook_post_features_disable_feature($component = null) {
+ }
+ 
+ /**
+@@ -458,7 +538,7 @@ function hook_post_features_disable_feature($component) {
+  * @param $component
+  *   String name of the component that is about to be enabled.
+  */
+-function hook_pre_features_enable_feature($component) {
++function hook_pre_features_enable_feature($component = null) {
+ }
+ 
+ /**
+@@ -468,7 +548,7 @@ function hook_pre_features_enable_feature($component) {
+  * @param $component
+  *   String name of the component that has just been enabled.
+  */
+-function hook_post_features_enable_feature($component) {
++function hook_post_features_enable_feature($component = null) {
+ }
+ 
+ /**
+diff --git a/features.module b/features.module
+index ba5b9fe..5b9b62d 100644
+--- a/features.module
++++ b/features.module
+@@ -932,10 +932,13 @@ function _features_restore($op, $items = array()) {
+     }
+   }
+ 
++  $pre_hook = 'pre_' . $restore_hook;
++  $post_hook = 'post_' . $restore_hook;
++  module_invoke_all($restore_hook . '_before', $items);
+   foreach ($items as $module_name => $components) {
++    module_invoke($module_name, $pre_hook, null);
+     foreach ($components as $component) {
+       // Invoke pre hook
+-      $pre_hook = 'pre_' . $restore_hook;
+       module_invoke($module_name, $pre_hook, $component);
+ 
+       if (features_hook($component, $restore_hook)) {
+@@ -951,10 +954,11 @@ function _features_restore($op, $items = array()) {
+       }
+ 
+       // Invoke post hook
+-      $post_hook = 'post_' . $restore_hook;
+       module_invoke($module_name, $post_hook, $component);
+     }
++    module_invoke($module_name, $post_hook, null);
+   }
++  module_invoke_all($restore_hook . '_after', $items);
+ }
+ 
+ /**
