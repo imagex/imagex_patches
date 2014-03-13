@@ -1,0 +1,23 @@
+diff --git a/plugins/content_types/menu_tree/menu_tree.inc b/plugins/content_types/menu_tree/menu_tree.inc
+index 024846a..e568fca 100644
+--- a/plugins/content_types/menu_tree/menu_tree.inc
++++ b/plugins/content_types/menu_tree/menu_tree.inc
+@@ -84,6 +84,7 @@ function menu_block_menu_tree_content_type_render($subtype, $conf, $args, $conte
+   $conf['delta'] = 'ctools-' . $conf['menu_name'] . '-' . $delta;
+ 
+   $tree = menu_tree_build($conf);
++  $tree = menu_tree_render($tree, $conf);
+ 
+   $block              = new stdClass();
+   $block->subtype     = $conf['menu_name'];
+@@ -163,6 +164,7 @@ function menu_block_menu_tree_content_type_admin_info($subtype, $conf, $context
+   // Force the title to not be a link.
+   $conf['title_link'] = 0;
+   $tree = menu_tree_build($conf);
++  $tree = menu_tree_render($tree, $conf);
+ 
+   $block          = new stdClass();
+   $block->subtype = $conf['menu_name'];
+-- 
+1.7.4.2
+
