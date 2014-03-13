@@ -1,16 +1,13 @@
 diff --git a/flickr/flickr.inc b/flickr/flickr.inc
-index 2d59f7d..de41a38 100644
+index 2d59f7d..89bbe28 100644
 --- a/flickr/flickr.inc
 +++ b/flickr/flickr.inc
-@@ -103,6 +103,11 @@ function flickr_request($method, $args, $cacheable = TRUE, $return_errors = FALS
-   foreach ($args as $k => $v) {
-     $encoded_params[] = urlencode($k) . '=' . urlencode($v);
-   }
-+  
-+  if (!in_array('format=php_serial', $encoded_params)) {
-+    $encoded_params[1] = 'format=php_serial';
-+  }
-+  
-   $url = FLICKR_REST_ENDPOINT . '?' . implode('&', $encoded_params);
+@@ -135,7 +135,7 @@ function flickr_request($method, $args, $cacheable = TRUE, $return_errors = FALS
  
-   // If it's a cachable request, try to load a cached value.
+   // Make sure it unserializes.
+ 
+-  $response = unserialize($result->data);
++  $response = @unserialize($result->data);
+   if (!$response) {
+     if ($return_errors) {
+       return array(
