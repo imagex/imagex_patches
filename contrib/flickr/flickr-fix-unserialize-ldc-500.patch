@@ -1,7 +1,7 @@
-diff --git a/flickr/flickr.inc b/flickr/flickr.inc
+diff --git a/flickr.inc b/flickr.inc
 index 2d59f7d..89bbe28 100644
---- a/flickr/flickr.inc
-+++ b/flickr/flickr.inc
+--- a/flickr.inc
++++ b/flickr.inc
 @@ -135,7 +135,7 @@ function flickr_request($method, $args, $cacheable = TRUE, $return_errors = FALS
  
    // Make sure it unserializes.
