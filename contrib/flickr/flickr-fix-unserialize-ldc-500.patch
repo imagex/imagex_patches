@@ -1,11 +1,11 @@
 diff --git a/flickr.inc b/flickr.inc
-index 2d59f7d..89bbe28 100644
+index 76bc9d4..4d3fd36 100644
 --- a/flickr.inc
 +++ b/flickr.inc
-@@ -135,7 +135,7 @@ function flickr_request($method, $args, $cacheable = TRUE, $return_errors = FALS
+@@ -132,7 +132,7 @@ function flickr_request($method, $args, $cacheable = TRUE, $return_errors = FALS
+   }
  
    // Make sure it unserializes.
- 
 -  $response = unserialize($result->data);
 +  $response = @unserialize($result->data);
    if (!$response) {
