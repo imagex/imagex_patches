@@ -1,0 +1,12 @@
+diff --git a/includes/conditional_fields.features.inc b/includes/conditional_fields.features.inc
+index 13ce702..e858bda 100644
+--- a/includes/conditional_fields.features.inc
++++ b/includes/conditional_fields.features.inc
+@@ -50,6 +50,7 @@ function conditional_fields_features_export_render($module_name, $data, $export
+ 
+     if (isset($dependencies[$entity]) && isset($dependencies[$entity][$bundle])) {
+       $info = $dependencies[$entity][$bundle];
++      drupal_alter('conditional_fields_features_export_render', $info);
+ 
+       // Ensure that dependencies are always exported in the same order to
+       // avoid fake overrides.

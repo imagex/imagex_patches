@@ -1,0 +1,82 @@
+diff --git a/uuid_features_helper.module b/uuid_features_helper.module
+index d547809..6268f80 100644
+--- a/uuid_features_helper.module
++++ b/uuid_features_helper.module
+@@ -13,58 +13,6 @@ function uuid_features_helper_ctools_plugin_directory($owner, $plugin_type) {
+ }
+ 
+ /**
+- * Implements hook_permission().
+- */
+-function uuid_features_helper_permission() {
+-  return array(
+-    'view entity uuid inline' => array(
+-      'title' => t('View an entity uuid inline'),
+-      'description' => t('Allows users to view an entity uuid inline to the edit form.'),
+-    ),
+-  );
+-}
+-
+-/**
+- * Implements hook_form_BASE_ID_form_alter().
+- */
+-function uuid_features_helper_form_node_form_alter(&$form, $form_state, $form_id) {
+-  $node = $form_state['node'];
+-  if (empty($node->uuid)) {
+-    return;
+-  }
+-
+-  if (user_access('view entity uuid inline')) {
+-    $uuid_info = array(
+-      '#type' => 'markup',
+-      '#markup' => t('UUID: @uuid', array('@uuid' => $node->uuid)),
+-      '#prefix' => '<small>',
+-      '#suffix' => '</small>',
+-    );
+-    $form['title']['#field_suffix'] = drupal_render($uuid_info);
+-  }
+-}
+-
+-/**
+- * Implements hook_form_BASE_ID_form_alter().
+- */
+-function uuid_features_helper_form_taxonomy_form_term_alter(&$form, $form_state, $form_id) {
+-  $term = $form_state['term'];
+-  if (empty($term->uuid)) {
+-    return;
+-  }
+-
+-  if (user_access('view entity uuid inline')) {
+-    $uuid_info = array(
+-      '#type' => 'markup',
+-      '#markup' => t('UUID: @uuid', array('@uuid' => $term->uuid)),
+-      '#prefix' => '<small>',
+-      '#suffix' => '</small>',
+-    );
+-    $form['name']['#field_suffix'] = drupal_render($uuid_info);
+-  }
+-}
+-
+-/**
+  * Implements hook_uuid_node_features_export_render_alter().
+  */
+ function uuid_features_helper_uuid_node_features_export_render_alter(&$export, $node, $module) {
+@@ -136,3 +84,17 @@ function uuid_features_helper_uuid_node_features_rebuild_alter(&$node, $module)
+     }
+   }
+ }
++
++/**
++ * Implements hook_conditional_fields_features_export_render_alter().
++ */
++
++function uuid_features_helper_conditional_fields_features_export_render_alter(&$info) {
++  foreach($info['dependees']['field_tags'] as $k => $v) {
++    $term = $v['options']['value'];
++    $tid = $term[0]['tid'];
++    $t = taxonomy_term_load($tid);
++    $info['dependees']['field_tags'][$k]['options']['value'][0]['uuid'] = $t->uuid;
++    unset($info['dependees']['field_tags'][$k]['options']['value'][0]['tid']);
++  }
++}
+\ No newline at end of file
