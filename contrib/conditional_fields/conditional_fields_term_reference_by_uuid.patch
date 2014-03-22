@@ -1,3 +1,22 @@
+diff --git a/conditional_fields.api.php b/conditional_fields.api.php
+index d937047..16bfcef 100644
+--- a/conditional_fields.api.php
++++ b/conditional_fields.api.php
+@@ -193,3 +193,14 @@ function conditional_fields_example_fancy_view_behavior($dependee, $dependent, $
+     $build['#prefix'] .= 'foo';
+   }
+ }
++
++/**
++ * Allows the exportation of conditional_fields reliant upon term references.
++ *
++ * @param $info
++ *   The bundle info of the node for export.
++ */
++function hook_conditional_fields_features_export_render_alter(&$info) {
++  // Alters the conditional fields that rely on a term reference to use it's UUID instead of tid.
++  // This fucnction is dependant upon the contrib uuid_features_helper (https://github.com/amcgowanca/drupal_uuid_features_helper)
++}
 diff --git a/includes/conditional_fields.features.inc b/includes/conditional_fields.features.inc
 index c5bb456..a988266 100644
 --- a/includes/conditional_fields.features.inc
