@@ -1,0 +1,14 @@
+diff --git a/includes/translation.handler.inc b/includes/translation.handler.inc
+index ae7ede3..491d208 100644
+--- a/includes/translation.handler.inc
++++ b/includes/translation.handler.inc
+@@ -486,7 +486,8 @@ class EntityTranslationDefaultHandler implements EntityTranslationHandlerInterfa
+       if (!isset($this->entity->{$translations_key})) {
+         $this->loadTranslations();
+       }
+-      return $this->entity->{$translations_key};
++      // Force `$this->entity->{$translations_key}` to be an object at all times.
++      return (object) $this->entity->{$translations_key};
+     }
+     return self::emptyTranslations();
+   }
