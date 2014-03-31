@@ -1,0 +1,25 @@
+diff --git a/includes/module.inc b/includes/module.inc
+index fe2a980..244876e 100644
+--- a/includes/module.inc
++++ b/includes/module.inc
+@@ -162,7 +162,19 @@ function system_list($type) {
+       // Drupal installations, which might have modules installed in different
+       // locations in the file system. The ordering here must also be
+       // consistent with the one used in module_implements().
+-      $result = db_query("SELECT * FROM {system} WHERE type = 'theme' OR (type = 'module' AND status = 1) ORDER BY weight ASC, name ASC");
++      if (variable_get('install_task', NULL) !== 'done') {
++        global $install_state;
++        if (!empty($install_state['profiles'])) {
++          $result = db_query("SELECT * FROM {system} WHERE type = 'theme' OR (type = 'module' AND status = 1) OR (type = 'module' AND name IN (:profiles)) ORDER BY weight ASC, name ASC", array(':profiles' => $install_state['profiles']));
++        }
++        else {
++          $result = array();
++        }
++      }
++      else {
++        $result = db_query("SELECT * FROM {system} WHERE type = 'theme' OR (type = 'module' AND status = 1) ORDER BY weight ASC, name ASC");
++      }
++
+       foreach ($result as $record) {
+         $record->info = unserialize($record->info);
+         // Build a list of all enabled modules.
