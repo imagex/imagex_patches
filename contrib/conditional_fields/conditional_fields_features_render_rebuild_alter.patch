@@ -1,0 +1,20 @@
+diff --git a/includes/conditional_fields.features.inc b/includes/conditional_fields.features.inc
+index a8504f4..78442a0 100644
+--- a/includes/conditional_fields.features.inc
++++ b/includes/conditional_fields.features.inc
+@@ -50,6 +50,7 @@ function conditional_fields_features_export_render($module_name, $data, $export
+ 
+     if (isset($dependencies[$entity]) && isset($dependencies[$entity][$bundle])) {
+       $info = $dependencies[$entity][$bundle];
++      drupal_alter('conditional_fields_features_export_render', $info);
+       foreach ($info['dependents'] as $dependent_field_name => $dependees) {
+         foreach ($dependees as $dependee) {
+           $code[] = '';
+@@ -87,6 +88,7 @@ function conditional_fields_features_rebuild($module) {
+   $instances = field_info_instances();
+ 
+   if (!empty($defaults)) {
++    drupal_alter('conditional_fields_features_rebuild', $defaults);
+     $node_types = array();
+     foreach ($defaults as $field) {
+       if (isset($dependencies[$field['entity']][$field['bundle']])) {
