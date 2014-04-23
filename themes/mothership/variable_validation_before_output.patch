@@ -1,0 +1,36 @@
+From ba4d64d1004c45150155f672e1d01bfd3da77d32 Mon Sep 17 00:00:00 2001
+From: Mark Labrecque <mark.labrecque@gmail.com>
+Date: Wed, 9 Apr 2014 08:17:37 -0700
+Subject: [PATCH] Added variable validation before output.
+
+---
+ mothership/functions/forum.php | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/mothership/functions/forum.php b/mothership/functions/forum.php
+index 41e95e2..97a1461 100644
+--- a/mothership/functions/forum.php
++++ b/mothership/functions/forum.php
+@@ -46,7 +46,7 @@ function mothership_preprocess_forum_list(&$variables) {
+     $variables['forums'][$id]->new_text = '';
+     $variables['forums'][$id]->new_url = '';
+     $variables['forums'][$id]->new_topics = 0;
+-    $variables['forums'][$id]->old_topics = $forum->num_topics;
++    $variables['forums'][$id]->old_topics = isset($forum->num_topics) ? $forum->num_topics : 0;
+     $variables['forums'][$id]->icon_class = 'default';
+     $variables['forums'][$id]->icon_title = t('No new posts');
+     if ($user->uid) {
+@@ -57,7 +57,9 @@ function mothership_preprocess_forum_list(&$variables) {
+         $variables['forums'][$id]->icon_class = 'new';
+         $variables['forums'][$id]->icon_title = t('New posts');
+       }
+-      $variables['forums'][$id]->old_topics = $forum->num_topics - $variables['forums'][$id]->new_topics;
++      if (isset($forum->num_topics)) {
++        $variables['forums'][$id]->old_topics = $forum->num_topics - $variables['forums'][$id]->new_topics;
++      }
+     }
+     $variables['forums'][$id]->last_reply = theme('forum_submitted', array('topic' => $forum->last_post));
+   }
+-- 
+1.8.5.2 (Apple Git-48)
+
